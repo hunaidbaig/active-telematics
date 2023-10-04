@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { appDataSource } from "../data-source";
-import bcrypt from 'bcrypt';
+import bcrypt, { compare } from 'bcrypt';
 import { User } from "../entities/User";
 
 
@@ -14,6 +14,8 @@ interface UserType{
 
 
 const create = async (req: Request, res: Response, next: NextFunction) => {
+
+    console.log(req.body);
 
     const {
         username,
@@ -29,6 +31,15 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 
             if(emailUser){
                 return res.json({ Bool: false , message: 'Email is already taken' });
+            }
+
+            if(number.length !== 11){
+                return res.json({ Bool: false , message: 'Your phone number is incorrect' });
+            }
+
+            if(password.length < 6 ){
+                console.log(password)
+                return res.json({ Bool: false , message: 'Password length should be between 6 and 20' });
             }
 
             const user = new User({
@@ -51,6 +62,8 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
 
+    console.log(req.body)
+
     const {
         email,
         password,
@@ -59,14 +72,15 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
         try{
             const user = await appDataSource.getRepository(User).findOneBy({ email })
 
-            if(!user){next
-                return res.json({ Bool: false , message: 'email or password is incorrect' });
+            console.log(user)
+            if(!user){
+                return res.json({ Bool: false , message: 'Email or Password is incorrect' });
             }
 
             const match = await bcrypt.compare(password, user.password);    
 
             if(!match){
-                return res.json({ Bool: false , message: 'email or password is incorrect' });
+                return res.json({ Bool: false , message: 'Email or Password is incorrect' });
             }
 
             return res.json({ Bool: true , data: user });

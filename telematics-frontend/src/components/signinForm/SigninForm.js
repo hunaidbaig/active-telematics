@@ -32,7 +32,7 @@ function SigninForm() {
           localStorage.setItem("rememberedCredentials", JSON.stringify({ email, password }));
         }
 
-        localStorage.setItem("userToken", JSON.stringify({ email }));
+        localStorage.setItem("userToken", JSON.stringify(result.data));
         nav("/");
       } else {
         console.error("Login failed");

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Sidebar = ({ dashboardToggle, toggleHandle }) => {
 
+    const user = JSON.parse(localStorage.getItem('userToken'));
 
     let sideBarList = [
         {
@@ -73,7 +74,7 @@ const Sidebar = ({ dashboardToggle, toggleHandle }) => {
                 <i className="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" onClick={(e)=> toggleHandle()} aria-hidden="true" id="iconSidenav"></i>
                 <Link className="navbar-brand m-0" to="/" target="_blank">
                     <img src={process.env.PUBLIC_URL + "/assets/img/logo-ct.png"} className="navbar-brand-img h-100" alt="main_logo" />
-                    <span className="ms-1 font-weight-bold">Welcome Hunaid Baig</span>
+                    <span className="ms-1 font-weight-bold">Welcome {user?.username}</span>
                 </Link>
             </div>
             <hr className="horizontal dark mt-0" />

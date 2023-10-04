@@ -82,7 +82,7 @@ function SignupForm() {
           if (checked) {
             localStorage.setItem("rememberedCredentials", JSON.stringify({ email, password }));
           }
-          localStorage.setItem("userToken", JSON.stringify({ email }));
+          localStorage.setItem("userToken", JSON.stringify(result.data));
           nav("/");
         } else {
           setError(result.message)
@@ -110,7 +110,7 @@ function SignupForm() {
 
           if (result.Bool) {
             setIsIpMatched(true);
-            setError("you can't access this website")
+            setError("You can't access this website")
             console.log("IP address stored in the database.");
           } else {
             console.error("Error storing IP address.");

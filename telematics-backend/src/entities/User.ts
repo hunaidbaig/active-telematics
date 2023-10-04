@@ -7,11 +7,6 @@ import bcrypt from 'bcrypt';
 @Entity('user')
     export class User extends BaseEntity {
 
-    constructor(user: Partial<User>) {
-        super();
-        Object.assign(this, user);
-    }
-
     @PrimaryColumn({ type: 'varchar', length: 50 })
     @Length(3, 50)
     username: string;
@@ -27,7 +22,7 @@ import bcrypt from 'bcrypt';
 
     @Column({ type: 'varchar', length: 100, nullable: true })
     @Exclude()
-    @Length(6, 100)
+    @Length(6, 20)
     password: string;
 
     @Column({ type: 'varchar', length: 50, nullable: true })
@@ -37,6 +32,11 @@ import bcrypt from 'bcrypt';
 
     toJSON() {
         return instanceToPlain(this);
+    }
+
+    constructor(user: Partial<User>) {
+        super();
+        Object.assign(this, user);
     }
 
     @BeforeInsert()
