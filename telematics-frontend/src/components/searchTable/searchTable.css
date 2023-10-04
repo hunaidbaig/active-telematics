@@ -1,0 +1,29 @@
+/* CSS for the search bar and filter dropdown */
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  /* Style for the input field */
+  .form-control {
+    width: 100%;
+    padding: 0.375rem 0.2rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+  }
+  
+  /* Style for the select dropdown */
+  .form-select {
+    width: max-content;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    outline: none;
+    color: #8392AB;
+  }
+  

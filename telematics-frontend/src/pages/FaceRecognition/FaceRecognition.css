@@ -1,0 +1,10 @@
+h6{
+    display: inline-block;
+}
+input[type="file"] {
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
