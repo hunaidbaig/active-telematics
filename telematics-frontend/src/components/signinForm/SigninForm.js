@@ -10,37 +10,55 @@ function SigninForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const loginData = {
-      email: email,
-      password: password,
-    };
-    try {
-      const response = await fetch("http://localhost:5000/api/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginData),
-      });
 
-      const result = await response.json();
+    const staticEmail = 'active@gmail.com';
+    const staticPassword = '123456';
+    
+    if(staticEmail === email && staticPassword === password){
+      localStorage.setItem("userToken", JSON.stringify({email}));
 
-      if (result.Bool) {
-        console.log("Login successful!");
-
-        if(checked){
-          localStorage.setItem("rememberedCredentials", JSON.stringify({ email, password }));
-        }
-
-        localStorage.setItem("userToken", JSON.stringify(result.data));
-        nav("/");
-      } else {
-        console.error("Login failed");
-        setError(result.message)
+      if(checked){
+        localStorage.setItem("rememberedCredentials", JSON.stringify({ email, password }));
       }
-    } catch (error) {
-      console.error("Error:", error);
+      nav("/");
+      console.error("Login success");
     }
+    else {
+        console.error("Login failed");
+        setError('Email or Passowrd in incorrect!');
+      }
+    
+    // const loginData = {
+    //   email: email,
+    //   password: password,
+    // };
+    // try {
+    //   const response = await fetch("http://localhost:5000/api/signin", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(loginData),
+    //   });
+
+    //   const result = await response.json();
+
+    //   if (result.Bool) {
+    //     console.log("Login successful!");
+
+    //     if(checked){
+    //       localStorage.setItem("rememberedCredentials", JSON.stringify({ email, password }));
+    //     }
+
+    //     localStorage.setItem("userToken", JSON.stringify(result.data));
+    //     nav("/");
+    //   } else {
+    //     console.error("Login failed");
+    //     setError(result.message)
+    //   }
+    // } catch (error) {
+    //   console.error("Error:", error);
+    // }
 
   }
   useEffect(() => {

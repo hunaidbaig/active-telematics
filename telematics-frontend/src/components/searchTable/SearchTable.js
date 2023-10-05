@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import "./searchTable.css";
+import DateRangePicker from 'rsuite/DateRangePicker';
+
+
 const SearchTable = ({ data, loading }) => {
+  const [show, setShow] = useState(false);
   const [filter, setFilter] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState("car_id");
+  const [selectedFilter, setSelectedFilter] = useState("license_number");
 
 
   const filteredData = data.filter((item) => {
     const searchBy =
-      selectedFilter === "car_id"
-        ? item.car_id.toString()
-        : selectedFilter === "processed_time"
+      selectedFilter === "processed_time"
         ? item.processed_time
         : selectedFilter === "license_number_score"
         ? item.license_number_score
@@ -18,23 +20,42 @@ const SearchTable = ({ data, loading }) => {
     return searchBy?.toLowerCase().includes(filter.toLowerCase());
   });
 
+
+  const selectHandler = (e)=>{
+
+    if(e.target.value === 'processed_time') {
+      setShow(true);
+      setSelectedFilter(e.target.value)
+    }
+    else{
+      setShow(false);
+      setSelectedFilter(e.target.value)
+    }
+  }
+
+
   return (
     <div className="row">
       <div className="col-12">
         <div className="card mb-4">
           <div class="card-header pb-0">
-            <div className="search-bar">
-              <input
-                type="text"
-                placeholder="search here"
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-                className="form-control"
-              />
-            </div>
+            {
+              show ? <DateRangePicker style={{ width: '100%' }} onOk={ (value) => console.log(value) } /> 
+              : 
+              <div className="search-bar">
+                <input
+                  type="text"
+                  placeholder="search here"
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value)}
+                  className="form-control"
+                />
+              </div>
+            }
+            
             <select
               value={selectedFilter}
-              onChange={(e) => setSelectedFilter(e.target.value)}
+              onChange={(e) => selectHandler(e)}
               className="form-control bg-gradient-primary" style={{
                 color:"white",
                 marginTop: '0.5rem'

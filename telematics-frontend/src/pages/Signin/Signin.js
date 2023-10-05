@@ -21,7 +21,8 @@ function Signin() {
 
   return (
     <>
-      <Header title='Admin Signup' link='/signup' />
+      {/* <Header title='Admin Signup' link='/signup' /> */}
+      <Header />
       <SigninForm />
       <Footer />
 
