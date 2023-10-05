@@ -7,18 +7,34 @@ const SearchTable = ({ data, loading }) => {
   const [show, setShow] = useState(false);
   const [filter, setFilter] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("license_number");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
 
-  const filteredData = data.filter((item) => {
-    const searchBy =
-      selectedFilter === "processed_time"
-        ? item.processed_time
-        : selectedFilter === "license_number_score"
-        ? item.license_number_score
-        : item.license_number;
+const filteredData = data.filter((item) => {
 
-    return searchBy?.toLowerCase().includes(filter.toLowerCase());
-  });
+  if (selectedFilter === "processed_time") {
+    const processedTime = item.processed_time;
+
+    if (startDate && endDate) {
+      const itemDate = new Date(processedTime);
+      
+      return (
+        itemDate >= startDate && itemDate <= endDate
+      );
+    }
+
+    return processedTime.toLowerCase().includes(filter.toLowerCase());
+  }
+
+  if (selectedFilter === "license_number_score") {
+    const licenseNumberScore = item.license_number_score.toString();
+    return licenseNumberScore.toLowerCase().includes(filter.toLowerCase());
+  }
+
+  const licenseNumber = item.license_number.toString();
+  return licenseNumber.toLowerCase().includes(filter.toLowerCase());
+});
 
 
   const selectHandler = (e)=>{
@@ -29,9 +45,25 @@ const SearchTable = ({ data, loading }) => {
     }
     else{
       setShow(false);
+      console.log('set')
       setSelectedFilter(e.target.value)
     }
   }
+
+  const dateChangeHandler = (value)=>{
+
+    const dateStart = new Date(value[0]);
+    dateStart.setDate(dateStart.getDate()-1);
+    const dateEnd = new Date(value[1]);
+
+    setStartDate(dateStart)
+    setEndDate(dateEnd);
+  }
+
+const cleanHandle = ()=>{
+  setEndDate(null);
+  setStartDate(null);
+}
 
 
   return (
@@ -40,7 +72,7 @@ const SearchTable = ({ data, loading }) => {
         <div className="card mb-4">
           <div class="card-header pb-0">
             {
-              show ? <DateRangePicker style={{ width: '100%' }} onOk={ (value) => console.log(value) } /> 
+              show ? <DateRangePicker showOneCalendar style={{ width: '100%' }} onOk={ (value) => dateChangeHandler(value) } onClean={()=> cleanHandle()} /> 
               : 
               <div className="search-bar">
                 <input
@@ -63,7 +95,7 @@ const SearchTable = ({ data, loading }) => {
             >
               <option value="license_number">License Number</option>
               <option value="processed_time">Date</option>
-              <option value="license_number_score ">License No score</option>
+              <option value="license_number_score">License No score</option>
             </select>
           </div>
           <div class="card-body px-0 pt-0 pb-2">
