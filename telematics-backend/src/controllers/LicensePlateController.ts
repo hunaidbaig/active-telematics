@@ -56,7 +56,27 @@ const getLicensePlate = async (req: Request, res: Response, next: NextFunction) 
   }
 };
 
+
+const getAllLicensePlate = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    
+    const licensePlates = await appDataSource.getRepository(LicensePlate).find();
+
+    if (!licensePlates) {
+      return res.json({ Bool: false, message: 'License plate not found' });
+    }
+
+    return res.json({ Bool: true, data: licensePlates });
+
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ Bool: false, message: "Internal server error" });
+  }
+};
+
+
 export const LicensePlateController = {
+  getAllLicensePlate,
   addLicensePlate,
   getLicensePlate,
 };

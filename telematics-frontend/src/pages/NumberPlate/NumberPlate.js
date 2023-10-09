@@ -22,7 +22,26 @@ function NumberPlate() {
           const { data } = result;
 
           if(data.length > 0){
-            setCarsData([...data]);
+
+            let numPlateData = [];
+
+            data.forEach((item) => {
+              const match = numPlateData.find((license) => license.licenseNumber === item.licenseNumber);
+
+              if (match) {
+                if (match.licenseNumberScore < item.licenseNumberScore) {
+                  numPlateData = numPlateData.map((license) =>
+                    license.licenseNumber === item.licenseNumber ? item : license
+                  );
+                }
+              } else {
+                numPlateData.push(item);
+              }
+            });
+
+            console.log(numPlateData)
+
+            setCarsData([...numPlateData]);
             setLoading(false)
             console.log(data);
           }
@@ -134,7 +153,7 @@ function NumberPlate() {
       <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <NumberPlateNavbar toggleHandle={toggleHandle} />
         <div className="container-fluid py-4">
-          <SearchTable data={carsData} />
+          <SearchTable data={carsData} loading={loading} />
         </div>
       </main>
     </div>

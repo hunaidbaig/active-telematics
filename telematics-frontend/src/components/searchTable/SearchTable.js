@@ -9,6 +9,9 @@ const SearchTable = ({ data, loading }) => {
   const [selectedFilter, setSelectedFilter] = useState("licenseNumber");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [currentImage, setCurrentImage] = useState('');
+
 
 
 const filteredData = data.filter((item) => {
@@ -66,97 +69,137 @@ const cleanHandle = ()=>{
 }
 
 
+
+  const openModal = (imageSrc, altText) => {
+    console.log(imageSrc, altText)
+    setCurrentImage(imageSrc);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+
   return (
-    <div className="row">
-      <div className="col-12">
-        <div className="card mb-4">
-          <div class="card-header pb-0">
-            {
-              show ? <DateRangePicker showOneCalendar style={{ width: '100%' }} onOk={ (value) => dateChangeHandler(value) } onClean={()=> cleanHandle()} /> 
-              : 
-              <div className="search-bar">
-                <input
-                  type="text"
-                  placeholder="search here"
-                  value={filter}
-                  onChange={(e) => setFilter(e.target.value)}
-                  className="form-control"
-                />
-              </div>
-            }
-            
-            <select
-              value={selectedFilter}
-              onChange={(e) => selectHandler(e)}
-              className="form-control bg-gradient-primary" style={{
-                color:"white",
-                marginTop: '0.5rem'
-              }}
-            >
-              <option value="">License Number</option>
-              <option value="processedTime">Date</option>
-              <option value="licenseNumberScore">License No score</option>
-            </select>
-          </div>
-          <div class="card-body px-0 pt-0 pb-2">
-            <div class="table-responsive p-0">
-              <table class="table align-items-center mb-0">
-                <thead>
-                  <tr>
-                    {/* <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                      Car ID
-                    </th> */}
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                      Date
-                    </th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                      License number 
-                    </th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                      license Number Score
-                    </th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                      Image
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  { loading ? <p>loading</p> : filteredData.map((item, index) => {
+    <>
+    {
+      modalVisible &&
+      <div id="myModal" className="my-modal" >
+        <span className="close" onClick={closeModal}>&times;</span>
+        <img className="modal-content" id="img01" src= {process.env.PUBLIC_URL+currentImage} alt={'number plate image'}
+          onError={(e)=>{
+            e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
+          }}
+        />
+      </div>
+    }
+      <div className="row">
+        <div className="col-12">
+          <div className="card mb-4">
+            <div class="card-header pb-0">
+              {
+                show ? <DateRangePicker showOneCalendar style={{ width: '100%' }} onOk={ (value) => dateChangeHandler(value) } onClean={()=> cleanHandle()} /> 
+                : 
+                <div className="search-bar">
+                  <input
+                    type="text"
+                    placeholder="search here"
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                    className="form-control"
+                  />
+                </div>
+              }
+              
+              <select
+                value={selectedFilter}
+                onChange={(e) => selectHandler(e)}
+                className="form-control bg-gradient-primary" style={{
+                  color:"white",
+                  marginTop: '0.5rem'
+                }}
+              >
+                <option value="">License Number</option>
+                <option value="processedTime">Date</option>
+                <option value="licenseNumberScore">License No score</option>
+              </select>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      {/* <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Car ID
+                      </th> */}
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Date
+                      </th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        License number 
+                      </th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        license Number Score
+                      </th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Image
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    { loading ? <p>loading</p> : filteredData.map((item, index) => {
 
-                    const plateImage = `${item.image.split('/').slice(4).join('/')}`;
-                    const plateImage2 = `${process.env.PUBLIC_URL}/assets/images/${plateImage}`;
+                      const plateImage = `${item.image.split('/').slice(4).join('/')}`;
+                      const plateImage2 = `${process.env.PUBLIC_URL}/assets/images/${plateImage}`;
 
-                    return(
-                        <tr key={index}>
-                        {/* <td class="text-xs font-weight-bold mb-0 text-secondary">
-                          {item.car_id}
-                        </td> */}
-                        <td class="text-xs font-weight-bold mb-0 text-secondary">{item.processedTime}</td>
-                        <td class="text-xs font-weight-bold mb-0 text-secondary">
-                          {item.licenseNumber}
-                        </td>
-                        <td class="text-xs font-weight-bold mb-0 text-secondary">
-                          {item.licenseNumberScore}
-                        </td>
-                        <td class="text-xs font-weight-bold mb-0 ">                          
-                          <img src={plateImage2} alt={index} width="50"
-
+                      return(
+                          <tr key={index}>
+                          {/* <td class="text-xs font-weight-bold mb-0 text-secondary">
+                            {item.car_id}
+                          </td> */}
+                          <td class="text-xs font-weight-bold mb-0 text-secondary">{item.processedTime}</td>
+                          <td class="text-xs font-weight-bold mb-0 text-secondary">
+                            {item.licenseNumber}
+                          </td>
+                          <td class="text-xs font-weight-bold mb-0 text-secondary">
+                            {item.licenseNumberScore}
+                          </td>
+                          <td class="text-xs font-weight-bold mb-0 " >
+                          <img
+                            id="myImg"
+                            src={plateImage2}
+                            alt="Snow"
+                            width={'50'}
+                            onClick={() => openModal(plateImage2, 'Snow')}
                             onError={(e)=>{
                               e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
                             }}
-
                           />
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
+                        
+                            {/* <img src={plateImage2} alt={index} width="50"
+                              onError={(e)=>{
+                                e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
+                              }}
+
+                            /> */}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
+        </div>
         </div>
       </div>
-    </div>
+
+    
+
+    </>
+
+
   );
 };
 
