@@ -1,6 +1,7 @@
 import { Router as ExpressRouter } from 'express';
 import { IpBlockController } from '../controllers/IpBlockController';
 import { UserController } from '../controllers/UserController';
+import { LicensePlateController } from '../controllers/LicensePlateController';
 
 const Router = ExpressRouter();
 
@@ -10,7 +11,6 @@ Router.post('/signin', UserController.login );
 
 Router.post('/add-api', IpBlockController.addIp );
 Router.get('/get-api', IpBlockController.getIp );
-
 
 
 

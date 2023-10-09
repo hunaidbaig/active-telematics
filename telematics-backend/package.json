@@ -1,7 +1,6 @@
 {
   "name": "telematics-backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
@@ -30,5 +29,6 @@
     "mongoose": "^7.5.3",
     "pg": "^8.11.3",
     "typeorm": "^0.3.17"
-  }
+  },
+  "description": ""
 }
