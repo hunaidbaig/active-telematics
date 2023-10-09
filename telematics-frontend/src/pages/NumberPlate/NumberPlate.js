@@ -8,114 +8,121 @@ function NumberPlate() {
   const [ loading, setLoading ] = useState(false);
 
 
-  // useEffect(()=>{
+  useEffect(()=>{
 
-  //   const fetchCars = async ()=>{
+    const fetchCars = async ()=>{
 
-  //     try{
-  //       setLoading(true)
-  //       const response = await fetch('http://192.168.1.151:8000/all-license-plates/');
+      try{
+        setLoading(true)
+        const response = await fetch('http://localhost:5000/api/get-all-license-plate');
   
-  //       const data = await response.json();
+        const result = await response.json();
+
+        if(result.Bool){
+          const { data } = result;
+
+          if(data.length > 0){
+            setCarsData([...data]);
+            setLoading(false)
+            console.log(data);
+          }
+          
+        }
+
+        console.log(result.data)
         
-  //       if(data.length > 0){
-
-  //         setCarsData([...data]);
-  //         setLoading(false)
-  //         console.log(data);
-  //       }
 
 
-  //     }
-  //     catch(e){
-  //       console.log(e);
-  //     }
+      }
+      catch(e){
+        console.log(e);
+      }
 
 
-  //   }
+    }
 
-  //   fetchCars();
+    fetchCars();
 
-  // },[])
+  },[])
 
 
   const toggleHandle = () => {
     setDashboardToggle(!dashboardToggle);
   };
 
-  const data = [
-    {
-      car_id: 1,
-      processed_time: "2023-09-29",
-      license_number: "ABC123",
-      license_number_score: "S12345",
-      image: "car1.jpg",
-    },
-    {
-      car_id: 2,
-      processed_time: "2023-09-30",
-      license_number: "XYZ789",
-      license_number_score: "S67890",
-      image: "car2.jpg",
-    },
-    {
-      car_id: 3,
-      processed_time: "2023-08-30",
-      license_number: "BTX269",
-      license_number_score: "S87923",
-      image: "car3.jpg",
-    },
-    {
-      car_id: 4,
-      processed_time: "2023-09-30",
-      license_number: "LJL370",
-      license_number_score: "S79274",
-      image: "car4.jpg",
-    },
-    {
-      car_id: 5,
-      processed_time: "2023-09-15",
-      license_number: "YUT769",
-      license_number_score: "S87922",
-      image: "car5.jpg",
-    },
-    {
-      car_id: 6,
-      processed_time: "2023-07-01",
-      license_number: "RET322",
-      license_number_score: "S14004",
-      image: "car6.jpg",
-    },
-    {
-      car_id: 7,
-      processed_time: "2023-07-01",
-      license_number: "RET322",
-      license_number_score: "S14004",
-      image: "car6.jpg",
-    },
-    {
-      car_id: 8,
-      processed_time: "2023-07-01",
-      license_number: "RET322",
-      license_number_score: "S14004",
-      image: "car6.jpg",
-    },
-    {
-      car_id: 9,
-      processed_time: "2023-07-01",
-      license_number: "RET322",
-      license_number_score: "S14004",
-      image: "car6.jpg",
-    },
-    {
-      car_id: 10,
-      processed_time: "2023-07-01",
-      license_number: "RET322",
-      license_number_score: "S14004",
-      image: "car6.jpg",
-    },
-    // Add more dummy data here
-  ];
+  // const data = [
+  //   {
+  //     car_id: 1,
+  //     processed_time: "2023-09-29",
+  //     license_number: "ABC123",
+  //     license_number_score: "S12345",
+  //     image: "car1.jpg",
+  //   },
+  //   {
+  //     car_id: 2,
+  //     processed_time: "2023-09-30",
+  //     license_number: "XYZ789",
+  //     license_number_score: "S67890",
+  //     image: "car2.jpg",
+  //   },
+  //   {
+  //     car_id: 3,
+  //     processed_time: "2023-08-30",
+  //     license_number: "BTX269",
+  //     license_number_score: "S87923",
+  //     image: "car3.jpg",
+  //   },
+  //   {
+  //     car_id: 4,
+  //     processed_time: "2023-09-30",
+  //     license_number: "LJL370",
+  //     license_number_score: "S79274",
+  //     image: "car4.jpg",
+  //   },
+  //   {
+  //     car_id: 5,
+  //     processed_time: "2023-09-15",
+  //     license_number: "YUT769",
+  //     license_number_score: "S87922",
+  //     image: "car5.jpg",
+  //   },
+  //   {
+  //     car_id: 6,
+  //     processed_time: "2023-07-01",
+  //     license_number: "RET322",
+  //     license_number_score: "S14004",
+  //     image: "car6.jpg",
+  //   },
+  //   {
+  //     car_id: 7,
+  //     processed_time: "2023-07-01",
+  //     license_number: "RET322",
+  //     license_number_score: "S14004",
+  //     image: "car6.jpg",
+  //   },
+  //   {
+  //     car_id: 8,
+  //     processed_time: "2023-07-01",
+  //     license_number: "RET322",
+  //     license_number_score: "S14004",
+  //     image: "car6.jpg",
+  //   },
+  //   {
+  //     car_id: 9,
+  //     processed_time: "2023-07-01",
+  //     license_number: "RET322",
+  //     license_number_score: "S14004",
+  //     image: "car6.jpg",
+  //   },
+  //   {
+  //     car_id: 10,
+  //     processed_time: "2023-07-01",
+  //     license_number: "RET322",
+  //     license_number_score: "S14004",
+  //     image: "car6.jpg",
+  //   },
+  //   // Add more dummy data here
+  // ];
 
   return (
     <div
@@ -127,7 +134,7 @@ function NumberPlate() {
       <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <NumberPlateNavbar toggleHandle={toggleHandle} />
         <div className="container-fluid py-4">
-          <SearchTable data={data} />
+          <SearchTable data={carsData} />
         </div>
       </main>
     </div>

@@ -6,15 +6,15 @@ import DateRangePicker from 'rsuite/DateRangePicker';
 const SearchTable = ({ data, loading }) => {
   const [show, setShow] = useState(false);
   const [filter, setFilter] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState("license_number");
+  const [selectedFilter, setSelectedFilter] = useState("licenseNumber");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
 
 const filteredData = data.filter((item) => {
 
-  if (selectedFilter === "processed_time") {
-    const processedTime = item.processed_time;
+  if (selectedFilter === "processedTime") {
+    const processedTime = item.processedTime;
 
     if (startDate && endDate) {
       const itemDate = new Date(processedTime);
@@ -27,19 +27,19 @@ const filteredData = data.filter((item) => {
     return processedTime.toLowerCase().includes(filter.toLowerCase());
   }
 
-  if (selectedFilter === "license_number_score") {
-    const licenseNumberScore = item.license_number_score.toString();
+  if (selectedFilter === "licenseNumberScore") {
+    const licenseNumberScore = item.licenseNumberScore.toString();
     return licenseNumberScore.toLowerCase().includes(filter.toLowerCase());
   }
 
-  const licenseNumber = item.license_number.toString();
+  const licenseNumber = item.licenseNumber.toString();
   return licenseNumber.toLowerCase().includes(filter.toLowerCase());
 });
 
 
   const selectHandler = (e)=>{
 
-    if(e.target.value === 'processed_time') {
+    if(e.target.value === 'processedTime') {
       setShow(true);
       setSelectedFilter(e.target.value)
     }
@@ -93,9 +93,9 @@ const cleanHandle = ()=>{
                 marginTop: '0.5rem'
               }}
             >
-              <option value="license_number">License Number</option>
-              <option value="processed_time">Date</option>
-              <option value="license_number_score">License No score</option>
+              <option value="">License Number</option>
+              <option value="processedTime">Date</option>
+              <option value="licenseNumberScore">License No score</option>
             </select>
           </div>
           <div class="card-body px-0 pt-0 pb-2">
@@ -121,23 +121,35 @@ const cleanHandle = ()=>{
                   </tr>
                 </thead>
                 <tbody>
-                  { loading ? <p>loading</p> : filteredData.map((item, index) => (
-                    <tr key={index}>
-                      {/* <td class="text-xs font-weight-bold mb-0 text-secondary">
-                        {item.car_id}
-                      </td> */}
-                      <td class="text-xs font-weight-bold mb-0 text-secondary">{item.processed_time}</td>
-                      <td class="text-xs font-weight-bold mb-0 text-secondary">
-                        {item.license_number}
-                      </td>
-                      <td class="text-xs font-weight-bold mb-0 text-secondary">
-                        {item.license_number_score}
-                      </td>
-                      <td class="text-xs font-weight-bold mb-0 ">
-                        <img src={item.image} alt="" width="50" />
-                      </td>
-                    </tr>
-                  ))}
+                  { loading ? <p>loading</p> : filteredData.map((item, index) => {
+
+                    const plateImage = `${item.image.split('/').slice(4).join('/')}`;
+                    const plateImage2 = `${process.env.PUBLIC_URL}/assets/images/${plateImage}`;
+
+                    return(
+                        <tr key={index}>
+                        {/* <td class="text-xs font-weight-bold mb-0 text-secondary">
+                          {item.car_id}
+                        </td> */}
+                        <td class="text-xs font-weight-bold mb-0 text-secondary">{item.processedTime}</td>
+                        <td class="text-xs font-weight-bold mb-0 text-secondary">
+                          {item.licenseNumber}
+                        </td>
+                        <td class="text-xs font-weight-bold mb-0 text-secondary">
+                          {item.licenseNumberScore}
+                        </td>
+                        <td class="text-xs font-weight-bold mb-0 ">                          
+                          <img src={plateImage2} alt={index} width="50"
+
+                            onError={(e)=>{
+                              e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
+                            }}
+
+                          />
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
             </div>
