@@ -60,8 +60,8 @@ const filteredData = data.filter((item) => {
   const dateChangeHandler = (value)=>{
 
     const dateStart = new Date(value[0]);
-    // dateStart.setDate(dateStart.getDate()-1);
-    dateStart.setDate(dateStart.getDate());
+    dateStart.setDate(dateStart.getDate()-1);
+    // dateStart.setDate(dateStart.getDate());
     const dateEnd = new Date(value[1]);
 
     setStartDate(dateStart)
@@ -130,7 +130,7 @@ const cleanHandle = ()=>{
                 </div>
               }
               {
-                dateSelected ?  <div className="search-bar">
+                dateSelected ?  <div style={{ marginTop: "0.5rem" }} className="search-bar">
                   <input
                     type="text"
                     placeholder="search license number "
