@@ -11,7 +11,8 @@ const SearchTable = ({ data, loading }) => {
   const [endDate, setEndDate] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentImage, setCurrentImage] = useState('');
-
+  const [dateSelected, setDateSelected] = useState(false);
+  const [licenseNumberFilter, setLicenseNumberFilter] = useState("");
 
 
 const filteredData = data.filter((item) => {
@@ -26,8 +27,8 @@ const filteredData = data.filter((item) => {
         itemDate >= startDate && itemDate <= endDate
       );
     }
-
     return processedTime.toLowerCase().includes(filter.toLowerCase());
+
   }
 
   if (selectedFilter === "licenseNumberScore") {
@@ -37,6 +38,7 @@ const filteredData = data.filter((item) => {
 
   const licenseNumber = item.licenseNumber.toString();
   return licenseNumber.toLowerCase().includes(filter.toLowerCase());
+
 });
 
 
@@ -51,21 +53,27 @@ const filteredData = data.filter((item) => {
       console.log('set')
       setSelectedFilter(e.target.value)
     }
+
+    setDateSelected(false)
   }
 
   const dateChangeHandler = (value)=>{
 
     const dateStart = new Date(value[0]);
-    dateStart.setDate(dateStart.getDate()-1);
+    // dateStart.setDate(dateStart.getDate()-1);
+    dateStart.setDate(dateStart.getDate());
     const dateEnd = new Date(value[1]);
 
     setStartDate(dateStart)
     setEndDate(dateEnd);
+    setDateSelected(true)
+
   }
 
 const cleanHandle = ()=>{
   setEndDate(null);
   setStartDate(null);
+  setDateSelected(false);
 }
 
 
@@ -80,6 +88,16 @@ const cleanHandle = ()=>{
     setModalVisible(false);
   };
 
+
+  const handleLicenseNumberFilterChange = (event) => {
+    setLicenseNumberFilter(event.target.value);
+  };
+
+  const filteredDataWithLicenseNumber = licenseNumberFilter
+  ? filteredData.filter((item) =>
+      item.licenseNumber.toLowerCase().includes(licenseNumberFilter.toLowerCase())
+    )
+  : filteredData;
 
   return (
     <>
@@ -111,6 +129,18 @@ const cleanHandle = ()=>{
                   />
                 </div>
               }
+              {
+                dateSelected ?  <div className="search-bar">
+                  <input
+                    type="text"
+                    placeholder="search license number "
+                    value={licenseNumberFilter}
+                    onChange={handleLicenseNumberFilterChange}
+                    className="form-control"
+                    />
+                  </div> : <></>
+              }
+
               
               <select
                 value={selectedFilter}
@@ -148,8 +178,8 @@ const cleanHandle = ()=>{
                     </tr>
                   </thead>
                   <tbody>
-                    { loading ? <p>loading</p> : filteredData.map((item, index) => {
-
+                    { loading ? <p>loading</p> : filteredDataWithLicenseNumber.map((item, index) => {
+                      
                       const plateImage = `${item.image.split('/').slice(4).join('/')}`;
                       const plateImage2 = `${process.env.PUBLIC_URL}/assets/images/${plateImage}`;
 
@@ -171,10 +201,14 @@ const cleanHandle = ()=>{
                             src={plateImage2}
                             alt="Snow"
                             width={'50'}
-                            onClick={() => openModal(plateImage2, 'Snow')}
-                            onError={(e)=>{
-                              e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
+                            onClick={() => {
+
+                              openModal(plateImage2, 'Snow')
                             }}
+                            // onError={(e)=>{
+                            //   console.log(plateImage2)
+                            //   //e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
+                            // }}
                           />
                         
                             {/* <img src={plateImage2} alt={index} width="50"

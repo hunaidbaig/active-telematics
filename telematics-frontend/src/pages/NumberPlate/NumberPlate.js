@@ -23,25 +23,25 @@ function NumberPlate() {
 
           if(data.length > 0){
 
-            let numPlateData = [];
+            // let numPlateData = [];
 
-            data.forEach((item) => {
-              const match = numPlateData.find((license) => license.licenseNumber === item.licenseNumber);
+            // data.forEach((item) => {
+            //   const match = numPlateData.find((license) => license.licenseNumber === item.licenseNumber);
 
-              if (match) {
-                if (match.licenseNumberScore < item.licenseNumberScore) {
-                  numPlateData = numPlateData.map((license) =>
-                    license.licenseNumber === item.licenseNumber ? item : license
-                  );
-                }
-              } else {
-                numPlateData.push(item);
-              }
-            });
+            //   if (match) {
+            //     if (match.licenseNumberScore < item.licenseNumberScore) {
+            //       numPlateData = numPlateData.map((license) =>
+            //         license.licenseNumber === item.licenseNumber ? item : license
+            //       );
+            //     }
+            //   } else {
+            //     numPlateData.push(item);
+            //   }
+            // });
 
-            console.log(numPlateData)
+            // console.log(numPlateData)
 
-            setCarsData([...numPlateData]);
+            setCarsData([...data]);
             setLoading(false)
             console.log(data);
           }
