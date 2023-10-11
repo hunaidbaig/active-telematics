@@ -23,3 +23,11 @@ input[type=number] {
 option{
   color: black;
 }
+.column img{
+  height:300px;
+  width:300px !important;
+  border-radius: 15px;
+  border:8px solid black;
+
+
+}
