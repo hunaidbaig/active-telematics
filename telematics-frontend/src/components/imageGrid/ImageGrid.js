@@ -5,31 +5,31 @@ import "./ImageGrid.css";
 
 
 
-function ImageGrid() {
-  const [images, setImages] = useState([]);
+function ImageGrid({images}) {
+  // const [images, setImages] = useState([]);
   const [gridClass, setGridClass] = useState("grid-2");
 
-  useEffect(() => {
-    const fetchImages = async () => {
+  // useEffect(() => {
+  //   const fetchImages = async () => {
      
-      const dummyImages = [
-        profile,
-        profile,
-        profile,
-        profile,
-        profile,
-        profile,
-        profile,
-        profile,
-      ];
+  //     const dummyImages = [
+  //       profile,
+  //       profile,
+  //       profile,
+  //       profile,
+  //       profile,
+  //       profile,
+  //       profile,
+  //       profile,
+  //     ];
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+  //     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      setImages(dummyImages);
-    };
+  //     setImages(dummyImages);
+  //   };
 
-    fetchImages();
-  }, []);
+  //   fetchImages();
+  // }, []);
 
   const changeGrid = (gridSize) => {
     setGridClass(`grid-${gridSize}`);
@@ -59,15 +59,17 @@ function ImageGrid() {
       </div>
 
       <div className={`row ${gridClass}`}>
-        {images.map((imageUrl, index) => (
+        {images?.map((imageUrl, index) => {
+          return(
           <div className="column" key={index}>
             <img
-              src={imageUrl}
+              src={process.env.PUBLIC_URL+'/assets/'+imageUrl[0]}
               alt={`${index}`}
               style={{ width: "50%" }}
             />
           </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   );
