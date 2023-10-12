@@ -61,6 +61,7 @@ function FaceRecognition() {
       <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
       <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <FaceRecognitionNavbar toggleHandle={toggleHandle} />
+        <div className='container-fluid py-4'>
         <div className="row" style={{width:"100%"}}>
           <div className="col-12">
             <div className="card mb-4">
@@ -79,6 +80,7 @@ function FaceRecognition() {
                   <ImageGrid images={images} />
               </div>
             </div>
+          </div>
           </div>
         </div>
       </main>
