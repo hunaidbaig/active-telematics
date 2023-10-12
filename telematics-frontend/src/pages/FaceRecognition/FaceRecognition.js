@@ -79,7 +79,7 @@ function FaceRecognition() {
                 </div>
                 <div className='card-body px-0 pt-0 pb-2'>
                   {/* <ImageGrid images={images} /> */}
-                    <RecognitionTable />
+                    <RecognitionTable images={images} />
                 </div>
               </div>
             </div>

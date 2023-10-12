@@ -24,10 +24,11 @@ option{
   color: black;
 }
 .column img{
-  height:300px;
-  width:300px !important;
-  border-radius: 15px;
-  border:8px solid black;
-
-
+  height:50px;
+  width:50px !important;
+  border-radius: 3px;
+  border:1px solid black;
+}
+.column img:hover{
+  cursor: pointer;
 }

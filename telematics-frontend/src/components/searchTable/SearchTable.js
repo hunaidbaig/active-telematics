@@ -289,6 +289,7 @@ const cleanHandle = ()=>{
                               <MapContainer center={[item.latitude, item.longitude]} zoom={13} style={{ flex: 1, borderRadius:"15px" }}>
                                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                                   <Marker position={[item.latitude, item.longitude]}></Marker>
+                                  {/* <Marker position={[item.latitude+1, item.longitude+1]}></Marker> */}
                               </MapContainer>
                           </div>
                           </td>
