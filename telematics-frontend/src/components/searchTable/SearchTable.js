@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useRef} from "react";
 import "./searchTable.css";
 import DateRangePicker from 'rsuite/DateRangePicker';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -22,7 +22,35 @@ const SearchTable = ({ data, loading }) => {
   const [dateSelected, setDateSelected] = useState(false);
   const [licenseNumberFilter, setLicenseNumberFilter] = useState("");
 
+  const mapRef = useRef(null);
 
+  const handleMapClick = () => {
+      const mapEl = mapRef.current;
+
+      if (!document.fullscreenElement) {
+        
+          if (mapEl.requestFullscreen) {
+              mapEl.requestFullscreen();
+          } else if (mapEl.mozRequestFullScreen) { /* Firefox */
+              mapEl.mozRequestFullScreen();
+          } else if (mapEl.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+              mapEl.webkitRequestFullscreen();
+          } else if (mapEl.msRequestFullscreen) { /* IE/Edge */
+              mapEl.msRequestFullscreen();
+          }
+      } else {
+
+          if (document.exitFullscreen) {
+              document.exitFullscreen();
+          } else if (document.mozCancelFullScreen) { /* Firefox */
+              document.mozCancelFullScreen();
+          } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
+              document.webkitExitFullscreen();
+          } else if (document.msExitFullscreen) { /* IE/Edge */
+              document.msExitFullscreen();
+          }
+      }
+  };
 const filteredData = data.filter((item) => {
 
   if (selectedFilter === "processedTime") {
@@ -230,15 +258,13 @@ const cleanHandle = ()=>{
 
                             /> */}
                           </td>
-                          <td>
-                          <MapContainer center={[item.latitude, item.longitude]} zoom={10} style={{ height: "60px", width: "80%" ,borderRadius:"15px",margin:"0px 16px"}}>
-                              <TileLayer
-                                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                              />
-                              <Marker position={[item.latitude, item.longitude]}>
-                                  
-                              </Marker>
-                          </MapContainer>
+                          <td >
+                          <div ref={mapRef} style={{ height: "80px", width: "100%", display: 'flex', flexDirection: 'column' }} onClick={handleMapClick}>
+                              <MapContainer center={[item.latitude, item.longitude]} zoom={13} style={{ flex: 1, borderRadius:"15px" }}>
+                                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                  <Marker position={[item.latitude, item.longitude]}></Marker>
+                              </MapContainer>
+                          </div>
                           </td>
                         </tr>
                       )
