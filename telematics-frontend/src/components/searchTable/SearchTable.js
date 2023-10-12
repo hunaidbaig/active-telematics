@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import "./searchTable.css";
 import DateRangePicker from 'rsuite/DateRangePicker';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+delete L.Icon.Default.prototype._getIconUrl;
 
-
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+});
 const SearchTable = ({ data, loading }) => {
   const [show, setShow] = useState(false);
   const [filter, setFilter] = useState("");
@@ -175,12 +183,16 @@ const cleanHandle = ()=>{
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         Image
                       </th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Location
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     { loading ? <p>loading</p> : filteredDataWithLicenseNumber.map((item, index) => {
-                      
-                      const plateImage = `${item.image.split('/').slice(4).join('/')}`;
+                      // console.log(item);
+                      // const plateImage = `${item.image.split('/').slice(4).join('/')}`;
+                      const plateImage = item.image
                       const plateImage2 = `${process.env.PUBLIC_URL}/assets/images/${plateImage}`;
 
                       return(
@@ -217,6 +229,16 @@ const cleanHandle = ()=>{
                               }}
 
                             /> */}
+                          </td>
+                          <td>
+                          <MapContainer center={[item.latitude, item.longitude]} zoom={10} style={{ height: "60px", width: "80%" ,borderRadius:"15px",margin:"0px 16px"}}>
+                              <TileLayer
+                                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                              />
+                              <Marker position={[item.latitude, item.longitude]}>
+                                  
+                              </Marker>
+                          </MapContainer>
                           </td>
                         </tr>
                       )
