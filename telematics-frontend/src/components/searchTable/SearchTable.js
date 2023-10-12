@@ -22,11 +22,29 @@ const SearchTable = ({ data, loading }) => {
   const [dateSelected, setDateSelected] = useState(false);
   const [licenseNumberFilter, setLicenseNumberFilter] = useState("");
 
+
+
   const mapRef = useRef(null);
 
-  const handleMapClick = () => {
-      const mapEl = mapRef.current;
+  const startPos = useRef({ x: 0, y: 0 });
+  const endPos = useRef({ x: 0, y: 0 });
 
+  const handleMouseDown = (e) => {
+      startPos.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handleMouseUp = (e) => {
+      endPos.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handleMapClick = () => {
+      const dx = endPos.current.x - startPos.current.x;
+      const dy = endPos.current.y - startPos.current.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < 10) {  // If mouse moved less than 10 pixels, it's likely a click not a drag
+          const mapEl = mapRef.current;
+     
       if (!document.fullscreenElement) {
         
           if (mapEl.requestFullscreen) {
@@ -50,7 +68,9 @@ const SearchTable = ({ data, loading }) => {
               document.msExitFullscreen();
           }
       }
+      }
   };
+
 const filteredData = data.filter((item) => {
 
   if (selectedFilter === "processedTime") {
@@ -259,7 +279,13 @@ const cleanHandle = ()=>{
                             /> */}
                           </td>
                           <td >
-                          <div ref={mapRef} style={{ height: "80px", width: "100%", display: 'flex', flexDirection: 'column' }} onClick={handleMapClick}>
+                          <div 
+                              ref={mapRef} 
+                              style={{ height: "80px", width: "100%", display: 'flex', flexDirection: 'column' }}
+                              onMouseDown={handleMouseDown}
+                              onMouseUp={handleMouseUp}
+                              onClick={handleMapClick}
+                          >
                               <MapContainer center={[item.latitude, item.longitude]} zoom={13} style={{ flex: 1, borderRadius:"15px" }}>
                                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                                   <Marker position={[item.latitude, item.longitude]}></Marker>
