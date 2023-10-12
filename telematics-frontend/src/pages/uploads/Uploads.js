@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import UploadsNavbar from "./UploadsNavbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 
@@ -7,6 +7,7 @@ function Uploads() {
   const [selectedOption, setSelectedOption] = useState("");
   const [videoURL, setVideoURL] = useState("");
   const [videoVisible, setVideoVisible] = useState(false);
+  const fileInputRef = useRef(null); 
 
   const toggleHandle = () => {
     setDashboardToggle(!dashboardToggle);
@@ -15,7 +16,11 @@ function Uploads() {
   const handleOptionChange = (e) => {
     const selectedValue = e.target.value;
     setSelectedOption(selectedValue);
+    setVideoURL('');
     setVideoVisible(selectedValue !== "");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
   };
 
   const handleVideoUpload = (e) => {
@@ -40,8 +45,16 @@ function Uploads() {
             <div className='col-12'>
               <div className='card mb-4'>
                 <div className='card-header'>
-                  <label style={{fontSize:"1rem"}}>Input Type:</label>
-                  <select value={selectedOption} onChange={handleOptionChange} className="form-control">
+                  <label style={{ fontSize: "1rem" }}>Input Type:</label>
+                  <select
+                    value={selectedOption}
+                    onChange={handleOptionChange}
+                    className="form-control bg-gradient-primary"
+                    style={{
+                      color: "white",
+                      marginTop: '0.5rem'
+                    }}
+                  >
                     <option value=''>Select an option</option>
                     <option value='face video'>Face video</option>
                     <option value='License Plate Video'>
@@ -51,10 +64,11 @@ function Uploads() {
 
                   {videoVisible && (
                     <div className='card-header pb-0'>
-                      <label style={{fontSize:"1rem"}}>Upload Video</label>
+                      <label style={{ fontSize: "1rem" }}>Upload Video</label>
                       <input
                         type='file'
                         accept='video/*'
+                        ref={fileInputRef}
                         onChange={handleVideoUpload}
                         className='btn bg-gradient-primary mt-3'
                       />
@@ -62,11 +76,11 @@ function Uploads() {
                   )}
 
                   {videoURL && (
-                    <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-                      <video controls >
+                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+                      <video controls width="100%">
                         <source src={videoURL} type='video/mp4' />
-                        Your browser does not support the video tag.
                       </video>
+                      <button className='btn bg-gradient-primary mt-4'>Processed Video</button>
                     </div>
                   )}
                 </div>
@@ -78,4 +92,5 @@ function Uploads() {
     </div>
   );
 }
+
 export default Uploads;
