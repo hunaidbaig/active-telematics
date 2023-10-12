@@ -14,6 +14,8 @@ const addLicensePlate = async (req: Request, res: Response, next: NextFunction) 
       licenseNumberScore,
       processedTime,
       image,
+      latitude,
+      longitude
     } = req.body;
 
     const licensePlate = appDataSource.getRepository(LicensePlate).create({
@@ -26,6 +28,8 @@ const addLicensePlate = async (req: Request, res: Response, next: NextFunction) 
       licenseNumberScore,
       processedTime,
       image,
+      latitude,
+      longitude
     });
 
     await appDataSource.getRepository(LicensePlate).save(licensePlate);

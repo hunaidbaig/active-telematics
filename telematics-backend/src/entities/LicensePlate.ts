@@ -32,6 +32,12 @@ export class LicensePlate extends BaseEntity {
   @Column({ type: 'text', name: 'image' })
   image: string;
 
+  @Column({ type: 'float', name: 'latitude' })
+  latitude: number;
+
+  @Column({ type: 'float', name: 'longitude' })
+  longitude: number;
+
   constructor(numPlate: Partial<LicensePlate>) {
     super();
     Object.assign(this, numPlate);
