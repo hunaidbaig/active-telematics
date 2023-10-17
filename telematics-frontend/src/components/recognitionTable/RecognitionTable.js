@@ -1,5 +1,14 @@
-import React,{useState} from "react";
+import React,{useState,useRef} from "react";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+delete L.Icon.Default.prototype._getIconUrl;
 
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+});
 function RecognitionTable({images}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentImage, setCurrentImage] = useState('');
@@ -12,7 +21,52 @@ function RecognitionTable({images}) {
     setModalVisible(false);
   };
 
+  const mapRef = useRef(null);
 
+  const startPos = useRef({ x: 0, y: 0 });
+  const endPos = useRef({ x: 0, y: 0 });
+
+  const handleMouseDown = (e) => {
+      startPos.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handleMouseUp = (e) => {
+      endPos.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handleMapClick = () => {
+      const dx = endPos.current.x - startPos.current.x;
+      const dy = endPos.current.y - startPos.current.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < 10) {  // If mouse moved less than 10 pixels, it's likely a click not a drag
+          const mapEl = mapRef.current;
+     
+      if (!document.fullscreenElement) {
+        
+          if (mapEl.requestFullscreen) {
+              mapEl.requestFullscreen();
+          } else if (mapEl.mozRequestFullScreen) { /* Firefox */
+              mapEl.mozRequestFullScreen();
+          } else if (mapEl.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+              mapEl.webkitRequestFullscreen();
+          } else if (mapEl.msRequestFullscreen) { /* IE/Edge */
+              mapEl.msRequestFullscreen();
+          }
+      } else {
+
+          if (document.exitFullscreen) {
+              document.exitFullscreen();
+          } else if (document.mozCancelFullScreen) { /* Firefox */
+              document.mozCancelFullScreen();
+          } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
+              document.webkitExitFullscreen();
+          } else if (document.msExitFullscreen) { /* IE/Edge */
+              document.msExitFullscreen();
+          }
+      }
+      }
+  };
   return (
     <>
   
@@ -48,10 +102,10 @@ function RecognitionTable({images}) {
                 <tbody>
                 {images?.map((imageUrl, index) => {
                 return(
-                  <>
+                  
                   <tr>
                     <td class='text-xs font-weight-bold mb-0 text-secondary'>
-                      time
+                      {imageUrl[4]}
                     </td>
                    
                       
@@ -71,11 +125,22 @@ function RecognitionTable({images}) {
                     </td>
                       
                    
-                    <td class='text-xs font-weight-bold mb-0 text-secondary'>
-                      location
-                    </td>
+                    <td >
+                          <div 
+                              ref={mapRef} 
+                              style={{ height: "80px", width: "100%", display: 'flex', flexDirection: 'column' }}
+                              onMouseDown={handleMouseDown}
+                              onMouseUp={handleMouseUp}
+                              onClick={handleMapClick}
+                          >
+                              <MapContainer center={[imageUrl[3], imageUrl[2]]} zoom={13} style={{ flex: 1, borderRadius:"15px" }}>
+                                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                  <Marker position={[imageUrl[3], imageUrl[2]]}></Marker>
+                                  {/* <Marker position={[item.latitude+1, item.longitude+1]}></Marker> */}
+                              </MapContainer>
+                          </div>
+                          </td>
                   </tr>
-                  </>
                      )
                     })}
                 </tbody>
