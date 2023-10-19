@@ -13,7 +13,6 @@ function FaceRecognition() {
 
   const onFileChange = (event) => {
     setFile(event.target.files[0]);
-    // onUpload();
   };
 
   const toggleHandle = () => {
@@ -30,12 +29,14 @@ function FaceRecognition() {
       return;
     }
 
+    console.log('file', file)
+
     const formData = new FormData();
     formData.append("file", file);
 
     try {
       const response = await axios.post(
-        "http://192.168.4.52:8000/find_face/",
+        "http://192.168.4.52:8001/find_face/",
         formData,
         {
           headers: {

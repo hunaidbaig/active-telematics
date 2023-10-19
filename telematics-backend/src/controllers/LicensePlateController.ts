@@ -78,9 +78,32 @@ const getAllLicensePlate = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
+const getUniqueLicensePlate = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    
+    const licensePlates = await appDataSource.getRepository(LicensePlate)
+                            .createQueryBuilder('license_plate')
+                            .select(['license_plate.*'])
+                            .distinctOn(['license_plate.license_number'])
+                            .groupBy('license_plate.license_number , license_plate.id' )
+                            .getRawMany();
+    console.log(licensePlates);
+    if (!licensePlates) {
+      return res.json({ Bool: false, message: 'License plate not found' });
+    }
+
+    return res.json({ Bool: true, data: licensePlates });
+
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ Bool: false, message: "Internal server error" });
+  }
+};
+
 
 export const LicensePlateController = {
   getAllLicensePlate,
   addLicensePlate,
   getLicensePlate,
+  getUniqueLicensePlate,
 };

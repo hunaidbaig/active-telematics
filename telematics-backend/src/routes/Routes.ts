@@ -16,6 +16,8 @@ Router.post('/add-license-plate', LicensePlateController.addLicensePlate);
 Router.get('/get-license-plate', LicensePlateController.getLicensePlate );
 Router.get('/get-all-license-plate', LicensePlateController.getAllLicensePlate );
 
+Router.get('/get-unique-license-plate', LicensePlateController.getUniqueLicensePlate );
+
 
 
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Chart, registerables } from 'chart.js';
 import { Bar, Line } from "react-chartjs-2";
 
@@ -6,12 +6,35 @@ Chart.register(...registerables);
 
 
 
-const DashboardHeroSection = () => {
+const DashboardHeroSection = ({ data }) => {
+  
+  const [monthWiseData, setMonthWiseData] = useState([0,0,0,0,0,0,0,0,0,0,0,0]);
+
+  useEffect(()=>{
+
+    if(data){
+      const updatedData = [...monthWiseData];
+      const filterData = data.map(car=>{
+        const date = new Date(car.processed_time);
+        const month = date.getMonth();
+        
+        const element = updatedData[month];
+        updatedData[month] = element+1;       
+        return ;
+      })
+      console.log(updatedData)
+      setMonthWiseData(updatedData);
+
+      console.log(filterData)
+      console.log(monthWiseData)
+    }
+
+  },[data])
 
   const lineChatData = {
-    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ['Jan', 'Feb', 'March',"Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [{
-      label: "Mobile apps",
+      label: "Cars",
       tension: 0.4,
       borderWidth: 0,
       pointRadius: 0,
@@ -19,22 +42,22 @@ const DashboardHeroSection = () => {
       borderWidth: 3,
       // backgroundColor: 'rgba(0, 230, 0, 50)',
       fill: true,
-      data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+      data: monthWiseData,
       maxBarThickness: 6
 
     },
-    {
-      label: "Websites",
-      tension: 0.4,
-      borderWidth: 0,
-      pointRadius: 0,
-      borderColor: "#3A416F",
-      borderWidth: 3,
-      // backgroundColor: 'rgba(20,23,39,0.2)',
-      fill: true,
-      data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-      maxBarThickness: 6
-    },
+    // {
+    //   label: "Websites",
+    //   tension: 0.4,
+    //   borderWidth: 0,
+    //   pointRadius: 0,
+    //   borderColor: "#3A416F",
+    //   borderWidth: 3,
+    //   // backgroundColor: 'rgba(20,23,39,0.2)',
+    //   fill: true,
+    //   data: [0, 0, 40, 140, 290, 290, 340, 230, 400],
+    //   maxBarThickness: 6
+    // },
     ],
   }
 
@@ -95,7 +118,7 @@ const DashboardHeroSection = () => {
   };
 
   const barChartData = {
-    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ['Jan', 'Feb', 'March',"Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [{
       label: "Sales",
       tension: 0.4,
@@ -103,7 +126,7 @@ const DashboardHeroSection = () => {
       borderRadius: 4,
       borderSkipped: false,
       backgroundColor: "#fff",
-      data: [450, 200, 100, 220, 500, 100, 400, 230, 500],
+      data: [...monthWiseData],
       maxBarThickness: 6
     }]
   };
@@ -168,9 +191,9 @@ const DashboardHeroSection = () => {
                   <Bar id="ckdas" data={barChartData} options={barChartOptions}   class="chart-canvas" height="170" />
                 </div>
               </div>
-              <h6 class="ms-2 mt-4 mb-0"> Active Customers </h6>
+              <h6 class="ms-2 mt-4 mb-0"> Total Cars Detected </h6>
               <p class="text-sm ms-2"> (<span class="font-weight-bolder">+23%</span>) than last week </p>
-              <div class="container border-radius-lg">
+              {/* <div class="container border-radius-lg">
                 <div class="row">
                   <div class="col-3 py-3 ps-0">
                     <div class="d-flex mb-2">
@@ -259,7 +282,7 @@ const DashboardHeroSection = () => {
                             </g>
                           </g>
                         </svg>
-                      </div>
+                      </div>Total Moderators
                       <p class="text-xs mt-1 mb-0 font-weight-bold">Sales</p>
                     </div>
                     <h4 class="font-weight-bolder">10K$</h4>
@@ -302,17 +325,17 @@ const DashboardHeroSection = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
         <div class="col-lg-7">
           <div class="card z-index-2">
             <div class="card-header pb-0">
-              <h6>Sales overview</h6>
+              <h6>Cars overview</h6>
               <p class="text-sm">
                 <i class="fa fa-arrow-up text-success"></i>
-                <span class="font-weight-bold">4% more</span> in 2021
+                <span class="font-weight-bold">4% more</span> in 2023
               </p>
             </div>
             <div class="card-body p-3">

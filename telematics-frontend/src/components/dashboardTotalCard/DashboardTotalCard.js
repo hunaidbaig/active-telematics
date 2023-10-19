@@ -1,13 +1,13 @@
 import React from 'react'
 import Card from './Card'
 
-const DashboardTotalCard = () => {
+const DashboardTotalCard = ({data}) => {
 
     let cardList = [
-        { title: 'Total Moderators', value: '+10%' },
-        { title: 'Total Resellers', value: '+3%' },
-        { title: 'New Customers', value: '-2%' },
-        { title: 'Sales', value: '+5%' },
+        { title: 'Total Cars', total: `${data?.length}` },
+        { title: 'Total Hours Processed ', total: `5` },
+        { title: 'Total Face Recognized', total: `172`  },
+        // { title: 'Sales', value: '+5%' },
     ]
 
   return (
@@ -15,7 +15,7 @@ const DashboardTotalCard = () => {
       <div class="row">
         {
             cardList.map((card, index)=>(
-                <Card title={card.title} value={card.value} />
+                <Card title={card.title} value={card.value} total={card.total} />
             ))
         }
       </div>

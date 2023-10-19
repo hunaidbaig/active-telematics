@@ -1,13 +1,20 @@
 import React, { useState, useRef } from "react";
 import UploadsNavbar from "./UploadsNavbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import axios from "axios";
+import { Loader } from "rsuite";
 
 function Uploads() {
   const [dashboardToggle, setDashboardToggle] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [videoURL, setVideoURL] = useState("");
+  const [videoURL, setVideoURL] = useState(null);
   const [videoVisible, setVideoVisible] = useState(false);
   const fileInputRef = useRef(null); 
+  const [file, setFile] = useState(null);
+  const [show, setShow] = useState(false);
+  const [status, setStatus] = useState(null);
+  const [loader, setLoader] = useState(false)
+
 
   const toggleHandle = () => {
     setDashboardToggle(!dashboardToggle);
@@ -17,6 +24,8 @@ function Uploads() {
     const selectedValue = e.target.value;
     setSelectedOption(selectedValue);
     setVideoURL('');
+    setShow(false)
+    setStatus(null);
     setVideoVisible(selectedValue !== "");
     if (fileInputRef.current) {
       fileInputRef.current.value = null;
@@ -24,12 +33,51 @@ function Uploads() {
   };
 
   const handleVideoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const objectURL = URL.createObjectURL(file);
+    const currentfile = e.target.files[0];
+    setFile(e.target.files[0])
+    setShow(true)
+    if (currentfile) {
+      const objectURL = URL.createObjectURL(currentfile);
       setVideoURL(objectURL);
     }
   };
+
+  const procesedHandle = async ()=>{
+    if (!file) {
+      console.log("No file selected");
+      return;
+    }
+
+    console.log('check', file)
+    setShow(true);
+    setLoader(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await axios.post(
+        "http://192.168.4.52:8000/upload_video/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      setShow(false);
+      setLoader(false);
+      setSelectedOption('');
+      fileInputRef.current.value = null;
+      setStatus('Your video successfully processed!')
+      console.log("Response:", response);
+
+    } catch (error) {
+      setSelectedOption('')
+      setStatus('Your video cannot be  processed!')
+      console.error("Error uploading file:", error);
+    }
+  }
 
   return (
     <div
@@ -75,14 +123,22 @@ function Uploads() {
                     </div>
                   )}
 
-                  {videoURL && (
+                  {show ? (
                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-                      <video controls width="100%">
-                        <source src={videoURL} type='video/mp4' />
+                      <video src={videoURL} style={{ height: '65vh' }} controls width="100%">
+                        {/* <source src={videoURL} type='video/mp4' /> */}
                       </video>
-                      <button className='btn bg-gradient-primary mt-4'>Processed Video</button>
+                      {
+                        <button style={{ display: 'flex', alignItems: 'center', gap: '5px' }} className='btn bg-gradient-primary mt-4' disabled={loader} onClick={procesedHandle}> {loader ? <><Loader /> <span>Processing...</span> </>   : 'Process Video' }</button>
+                      }
                     </div>
-                  )}
+                  ) : <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+                        <h4 style={{ marginTop: '2rem'}}>
+                          {status}
+                        </h4>
+                      </div>
+                  
+                  }
                 </div>
               </div>
             </div>

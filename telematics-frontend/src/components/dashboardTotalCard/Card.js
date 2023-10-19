@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Card = ({ title, value }) => {
+const Card = ({ title, value, total }) => {
   return (
     <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
@@ -10,7 +10,7 @@ const Card = ({ title, value }) => {
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">{title}</p>
                     <h5 class="font-weight-bolder mb-0">
-                      3
+                      {total}
                       <span class="text-success text-sm font-weight-bolder">{value}</span>
                     </h5>
                   </div>
