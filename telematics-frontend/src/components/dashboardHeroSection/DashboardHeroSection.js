@@ -120,7 +120,7 @@ const DashboardHeroSection = ({ data }) => {
   const barChartData = {
     labels: ['Jan', 'Feb', 'March',"Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [{
-      label: "Sales",
+      label: "Cars",
       tension: 0.4,
       borderWidth: 0,
       borderRadius: 4,

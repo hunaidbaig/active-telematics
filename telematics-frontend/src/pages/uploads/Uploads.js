@@ -56,7 +56,7 @@ function Uploads() {
 
     try {
       const response = await axios.post(
-        "http://192.168.4.52:8000/upload_video/",
+        "http://13.235.82.14:8000/upload_video/",
         formData,
         {
           headers: {

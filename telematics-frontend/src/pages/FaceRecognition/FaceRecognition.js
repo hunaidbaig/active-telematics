@@ -36,7 +36,7 @@ function FaceRecognition() {
 
     try {
       const response = await axios.post(
-        "http://192.168.4.52:8001/find_face/",
+        "http://13.235.82.14:8000/find_face/",
         formData,
         {
           headers: {
