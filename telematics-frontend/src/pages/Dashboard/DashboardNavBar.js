@@ -68,7 +68,7 @@ const DashboardNavBar = ({ toggleHandle }) => {
                 </button>
               </form>
             </li>
-            <li class="nav-item px-3 d-flex align-items-center">
+            {/* <li class="nav-item px-3 d-flex align-items-center">
               <Link   to="" class="nav-link text-body p-0">
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </Link  >
@@ -104,7 +104,7 @@ const DashboardNavBar = ({ toggleHandle }) => {
                   </Link  >
                 </li>
               </ul>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

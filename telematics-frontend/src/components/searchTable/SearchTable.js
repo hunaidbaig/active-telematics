@@ -1,7 +1,7 @@
-import React, { useState , useRef} from "react";
+import React, { useState , useRef } from "react";
 import "./searchTable.css";
 import DateRangePicker from 'rsuite/DateRangePicker';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 delete L.Icon.Default.prototype._getIconUrl;
@@ -44,16 +44,16 @@ const SearchTable = ({ data, loading }) => {
 
       if (distance < 10) {  // If mouse moved less than 10 pixels, it's likely a click not a drag
           const mapEl = mapRef.current;
-     
+        console.log(mapEl);
       if (!document.fullscreenElement) {
         
-          if (mapEl.requestFullscreen) {
+          if (mapEl?.requestFullscreen) {
               mapEl.requestFullscreen();
-          } else if (mapEl.mozRequestFullScreen) { /* Firefox */
+          } else if (mapEl?.mozRequestFullScreen) { /* Firefox */
               mapEl.mozRequestFullScreen();
-          } else if (mapEl.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+          } else if (mapEl?.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
               mapEl.webkitRequestFullscreen();
-          } else if (mapEl.msRequestFullscreen) { /* IE/Edge */
+          } else if (mapEl?.msRequestFullscreen) { /* IE/Edge */
               mapEl.msRequestFullscreen();
           }
       } else {
@@ -161,7 +161,7 @@ const cleanHandle = ()=>{
       modalVisible &&
       <div id="myModal" className="my-modal" >
         <span className="close" onClick={closeModal}>&times;</span>
-        <img className="modal-content" id="img01" src= {process.env.PUBLIC_URL+currentImage} alt={'number plate image'}
+        <img className="modal-content" id="img01" src= {process.env.PUBLIC_URL+currentImage} alt={'number plate '}
           onError={(e)=>{
             e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
           }}
@@ -279,8 +279,10 @@ const cleanHandle = ()=>{
                             /> */}
                           </td>
                           <td >
-                          <div 
-                              ref={mapRef} 
+                            <div 
+                            
+                              // ref={mapRef} 
+                              ref={el => { mapRef.current = el; }}
                               style={{ height: "80px", width: "100%", display: 'flex', flexDirection: 'column' }}
                               onMouseDown={handleMouseDown}
                               onMouseUp={handleMouseUp}
@@ -291,7 +293,7 @@ const cleanHandle = ()=>{
                                   <Marker position={[item.latitude, item.longitude]}></Marker>
                                   {/* <Marker position={[item.latitude+1, item.longitude+1]}></Marker> */}
                               </MapContainer>
-                          </div>
+                            </div>
                           </td>
                         </tr>
                       )

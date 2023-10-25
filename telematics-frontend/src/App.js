@@ -1,7 +1,8 @@
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { Route, Routes } from 'react-router-dom';
 import Signin from './pages/Signin/Signin';
-// import Signup from './pages/Signup/Signup';
+import { ToastContainer } from 'react-toastify';
 import Dashboard from './pages/Dashboard/Dashboard';
 import NumberPlate from './pages/NumberPlate/NumberPlate';
 import FaceRecognition from './pages/FaceRecognition/FaceRecognition';
@@ -11,6 +12,7 @@ import Uploads from './pages/uploads/Uploads';
 function App() {
   return (
     <>
+      <ToastContainer />
       <Routes>
         <Route path='/signin' element={<Signin />} />
         {/* <Route path='/signup' element={<Signup />} /> */}

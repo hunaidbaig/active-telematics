@@ -10,9 +10,12 @@ function FaceRecognition() {
   const [dashboardToggle, setDashboardToggle] = useState(false);
   const [file, setFile] = useState(null);
   const [images, setImages] = useState(null);
+  const [loading, setLoading] = useState(null);
 
   const onFileChange = (event) => {
     setFile(event.target.files[0]);
+    setLoading(true)
+    
   };
 
   const toggleHandle = () => {
@@ -26,6 +29,7 @@ function FaceRecognition() {
   const onUpload = async () => {
     if (!file) {
       console.log("No file selected");
+      setLoading(null)
       return;
     }
 
@@ -49,7 +53,9 @@ function FaceRecognition() {
       console.log("Response:", response.data.similar_images);
 
       setImages(response.data.similar_images);
+      setLoading(null)
     } catch (error) {
+      setLoading(null)
       console.error("Error uploading file:", error);
     }
   };
@@ -80,7 +86,7 @@ function FaceRecognition() {
                 </div>
                 <div className='card-body px-0 pt-0 pb-2'>
                   {/* <ImageGrid images={images} /> */}
-                    <RecognitionTable images={images} />
+                    <RecognitionTable images={images} loading={loading} />
                 </div>
               </div>
             </div>

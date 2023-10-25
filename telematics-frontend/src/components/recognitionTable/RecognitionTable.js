@@ -1,5 +1,6 @@
 import React,{useState,useRef} from "react";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { Loader } from "rsuite";
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 delete L.Icon.Default.prototype._getIconUrl;
@@ -9,7 +10,7 @@ L.Icon.Default.mergeOptions({
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
-function RecognitionTable({images}) {
+function RecognitionTable({ images, loading }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentImage, setCurrentImage] = useState('');
   const openModal = (imageSrc, altText) => {
@@ -77,7 +78,7 @@ function RecognitionTable({images}) {
         <img className="modal-content" id="img01" style={{
           height:"800px",
           objectFit:"contain"
-        }} src= {process.env.PUBLIC_URL+currentImage} alt={'number plate image'}
+        }} src= {process.env.PUBLIC_URL+currentImage} alt={'number plate'}
           onError={(e)=>{
             e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
           }}
@@ -85,66 +86,74 @@ function RecognitionTable({images}) {
       </div>
     }
             <div class='table-responsive p-0'>
-              <table class='table align-items-center mb-0'>
-                <thead>
-                  <tr>
-                    <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
-                      Time
-                    </th>
-                    <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
-                      Image
-                    </th>
-                    <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
-                      Location
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                {images?.map((imageUrl, index) => {
-                return(
-                  
-                  <tr>
-                    <td class='text-xs font-weight-bold mb-0 text-secondary'>
-                      {imageUrl[4]}
-                    </td>
-                   
-                      
-                       
-                          <td class='text-xs font-weight-bold mb-0 text-secondary'>
-                        <div className="column" key={index}>
-                            <img
-                              src={process.env.PUBLIC_URL+'/assets/'+imageUrl[0]}
-                              alt={`${index}`}
-                              style={{ width: "50%" }}
-                              onClick={() => {
+              {
+                loading && <Loader style={{ display: 'flex', justifyContent: 'center' }} />
+              }
+              {
+                !loading && 
+                <table class='table align-items-center mb-0'>
+                  {images && 
+                    <thead>
+                      <tr>
+                        <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
+                          Time
+                        </th>
+                        <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
+                          Image
+                        </th>
+                        <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
+                          Location
+                        </th>
+                      </tr>
+                    </thead>
+                  }
+                  <tbody>
+                  {images?.map((imageUrl, index) => {
+                  return(
+                    
+                    <tr>
+                      <td class='text-xs font-weight-bold mb-0 text-secondary'>
+                        {imageUrl[4]}
+                      </td>
+                    
+                        
+                        
+                            <td class='text-xs font-weight-bold mb-0 text-secondary'>
+                          <div className="column" key={index}>
+                              <img
+                                src={process.env.PUBLIC_URL+'/assets/'+imageUrl[0]}
+                                alt={`${index}`}
+                                style={{ width: "50%" }}
+                                onClick={() => {
 
-                                openModal(process.env.PUBLIC_URL+'/assets/'+imageUrl[0], 'Snow')
-                              }}
-                            />
-                          </div>
-                    </td>
-                      
-                   
-                    <td >
-                          <div 
-                              ref={mapRef} 
-                              style={{ height: "80px", width: "100%", display: 'flex', flexDirection: 'column' }}
-                              onMouseDown={handleMouseDown}
-                              onMouseUp={handleMouseUp}
-                              onClick={handleMapClick}
-                          >
-                              <MapContainer center={[imageUrl[3], imageUrl[2]]} zoom={13} style={{ flex: 1, borderRadius:"15px" }}>
-                                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                                  <Marker position={[imageUrl[3], imageUrl[2]]}></Marker>
-                                  {/* <Marker position={[item.latitude+1, item.longitude+1]}></Marker> */}
-                              </MapContainer>
-                          </div>
-                          </td>
-                  </tr>
-                     )
-                    })}
-                </tbody>
-              </table>
+                                  openModal(process.env.PUBLIC_URL+'/assets/'+imageUrl[0], 'Snow')
+                                }}
+                              />
+                            </div>
+                      </td>
+                        
+                    
+                      <td >
+                            <div 
+                                ref={mapRef} 
+                                style={{ height: "80px", width: "100%", display: 'flex', flexDirection: 'column' }}
+                                onMouseDown={handleMouseDown}
+                                onMouseUp={handleMouseUp}
+                                onClick={handleMapClick}
+                            >
+                                <MapContainer center={[imageUrl[3], imageUrl[2]]} zoom={13} style={{ flex: 1, borderRadius:"15px" }}>
+                                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                    <Marker position={[imageUrl[3], imageUrl[2]]}></Marker>
+                                    {/* <Marker position={[item.latitude+1, item.longitude+1]}></Marker> */}
+                                </MapContainer>
+                            </div>
+                            </td>
+                    </tr>
+                      )
+                      })}
+                  </tbody>
+                </table>
+              }
             </div>
             </>
   );

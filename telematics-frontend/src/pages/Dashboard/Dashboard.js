@@ -3,7 +3,6 @@ import Sidebar from '../../components/Sidebar/Sidebar'
 import DashboardNavBar from './DashboardNavBar'
 import DashboardTotalCard from '../../components/dashboardTotalCard/DashboardTotalCard';
 import DashboardHeroSection from '../../components/dashboardHeroSection/DashboardHeroSection';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Dashboard = () => {

@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { toast } from 'react-toastify'
 import UploadsNavbar from "./UploadsNavbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import axios from "axios";
@@ -12,7 +13,6 @@ function Uploads() {
   const fileInputRef = useRef(null); 
   const [file, setFile] = useState(null);
   const [show, setShow] = useState(false);
-  const [status, setStatus] = useState(null);
   const [loader, setLoader] = useState(false)
 
 
@@ -25,7 +25,6 @@ function Uploads() {
     setSelectedOption(selectedValue);
     setVideoURL('');
     setShow(false)
-    setStatus(null);
     setVideoVisible(selectedValue !== "");
     if (fileInputRef.current) {
       fileInputRef.current.value = null;
@@ -69,12 +68,32 @@ function Uploads() {
       setLoader(false);
       setSelectedOption('');
       fileInputRef.current.value = null;
-      setStatus('Your video successfully processed!')
-      console.log("Response:", response);
+      // setStatus('Your video successfully processed!')
+      toast.success(' Your video successfully processed!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        })
+      // console.log("Response:", response);
 
     } catch (error) {
       setSelectedOption('')
-      setStatus('Your video cannot be  processed!')
+      // setStatus('Your video cannot be  processed!');
+      toast.error(' Your video cannot be  processed!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        })
       console.error("Error uploading file:", error);
     }
   }
@@ -134,7 +153,7 @@ function Uploads() {
                     </div>
                   ) : <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
                         <h4 style={{ marginTop: '2rem'}}>
-                          {status}
+                          { }
                         </h4>
                       </div>
                   

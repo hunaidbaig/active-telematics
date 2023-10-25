@@ -1,6 +1,5 @@
 // ImageGrid.js
-import React, { useState, useEffect } from "react";
-import profile from '../../images/profile.png'
+import React, { useState } from "react";
 import "./ImageGrid.css";
 
 
