@@ -14,7 +14,7 @@ function NumberPlate() {
 
       try{
         setLoading(true)
-        const response = await fetch('http://localhost:5000/api/get-all-license-plate');
+        const response = await fetch('http://13.235.82.14:5000/api/get-all-license-plate');
   
         const result = await response.json();
 

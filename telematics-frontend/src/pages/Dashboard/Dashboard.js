@@ -15,7 +15,7 @@ const Dashboard = () => {
 
     const fetch = async ()=>{
       try{
-        const response = await axios.get('http://localhost:5000/api/get-unique-license-plate');
+        const response = await axios.get('http://13.235.82.14:5000/api/get-unique-license-plate');
         const result =  response.data;
   
         if(result.Bool){

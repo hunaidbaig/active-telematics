@@ -17,6 +17,9 @@ export const appDataSource = new DataSource({
     entities: [ path.resolve(__dirname, 'entities', '**', '*{.ts,.js}') ],
     migrations: [path.resolve(__dirname, 'migrations', '**', '*{.ts,.js}')],
     subscribers: [path.resolve(__dirname, 'subscribers', '**', '*{.ts,.js}')],
+ssl: {
+      rejectUnauthorized: false  // Important: consider using a CA certificate for production use!
+  },
   //   cli: {
   //     entitiesDir: path.resolve(__dirname, 'entities'),
   //     migrationsDir: path.resolve(__dirname, 'migrations'),
