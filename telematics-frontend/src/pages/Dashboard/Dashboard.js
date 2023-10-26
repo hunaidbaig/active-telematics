@@ -51,7 +51,7 @@ const Dashboard = () => {
         <div className={`g-sidenav-show  bg-gray-100 ${dashboardToggle ?'g-sidenav-pinned' : ''} ` }>
 
             <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
-            <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+            <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
                 <DashboardNavBar  toggleHandle={toggleHandle} />
                 <DashboardTotalCard data={data} />
                 <DashboardHeroSection data={data} loadData={loadData} />

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { toast } from 'react-toastify'
+// import { toast } from 'react-toastify'
 import UploadsNavbar from "./UploadsNavbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import axios from "axios";
@@ -14,6 +14,7 @@ function Uploads() {
   const [file, setFile] = useState(null);
   const [show, setShow] = useState(false);
   const [loader, setLoader] = useState(false)
+  const [status, setStatus] = useState(false)
 
 
   const toggleHandle = () => {
@@ -68,32 +69,32 @@ function Uploads() {
       setLoader(false);
       setSelectedOption('');
       fileInputRef.current.value = null;
-      // setStatus('Your video successfully processed!')
-      toast.success(' Your video successfully processed!', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        })
+      setStatus('Your video successfully processed!')
+      // toast.success(' Your video successfully processed!', {
+      //   position: "top-center",
+      //   autoClose: 3000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      //   })
       // console.log("Response:", response);
 
     } catch (error) {
       setSelectedOption('')
-      // setStatus('Your video cannot be  processed!');
-      toast.error(' Your video cannot be  processed!', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        })
+      setStatus('Your video cannot be  processed!');
+      // toast.error(' Your video cannot be  processed!', {
+      //   position: "top-center",
+      //   autoClose: 3000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      //   })
       console.error("Error uploading file:", error);
     }
   }
@@ -148,12 +149,12 @@ function Uploads() {
                         {/* <source src={videoURL} type='video/mp4' /> */}
                       </video>
                       {
-                        <button style={{ display: 'flex', alignItems: 'center', gap: '5px' }} className='btn bg-gradient-primary mt-4' disabled={loader} onClick={procesedHandle}> {loader ? <><Loader /> <span>Processing...</span> </>   : 'Process Video' }</button>
+                        <button style={{ display: 'flex', alignItems: 'center', gap: '5px' }} className='btn bg-gradient-primary mt-4' disabled={loader} onClick={()=> procesedHandle()}> {loader ? <><Loader /> <span>Processing...</span> </>   : 'Process Video' }</button>
                       }
                     </div>
                   ) : <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
                         <h4 style={{ marginTop: '2rem'}}>
-                          { }
+                          { status }
                         </h4>
                       </div>
                   

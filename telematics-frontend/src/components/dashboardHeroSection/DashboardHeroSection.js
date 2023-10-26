@@ -29,7 +29,7 @@ const DashboardHeroSection = ({ data, loadData }) => {
       console.log(monthWiseData)
     }
 
-  },[loadData])
+  },[data?.length>0])
 
   const lineChatData = {
     labels: ['Jan', 'Feb', 'March',"Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
