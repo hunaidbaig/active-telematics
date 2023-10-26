@@ -78,7 +78,7 @@ function RecognitionTable({ images, loading }) {
         <img className="modal-content" id="img01" style={{
           height:"800px",
           objectFit:"contain"
-        }} src= {process.env.PUBLIC_URL+currentImage} alt={'number plate'}
+        }} src= {process.env.PUBLIC_URL+'/assets/images/face_images/'+currentImage} alt={'number plate'}
           onError={(e)=>{
             e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
           }}
@@ -126,7 +126,7 @@ function RecognitionTable({ images, loading }) {
                                 style={{ width: "50%" }}
                                 onClick={() => {
 
-                                  openModal(process.env.PUBLIC_URL+'/assets/'+imageUrl[0], 'Snow')
+                                  openModal(process.env.PUBLIC_URL+'/assets/images/face_images/'+imageUrl[0], 'Snow')
                                 }}
                               />
                             </div>
