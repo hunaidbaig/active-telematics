@@ -6,7 +6,7 @@ Chart.register(...registerables);
 
 
 
-const DashboardHeroSection = ({ data }) => {
+const DashboardHeroSection = ({ data, loadData }) => {
   
   const [monthWiseData, setMonthWiseData] = useState([0,0,0,0,0,0,0,0,0,0,0,0]);
 
@@ -29,7 +29,7 @@ const DashboardHeroSection = ({ data }) => {
       console.log(monthWiseData)
     }
 
-  },[data])
+  },[loadData])
 
   const lineChatData = {
     labels: ['Jan', 'Feb', 'March',"Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],

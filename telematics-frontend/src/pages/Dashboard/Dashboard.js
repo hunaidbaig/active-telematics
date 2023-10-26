@@ -9,16 +9,19 @@ const Dashboard = () => {
 
   const [dashboardToggle, setDashboardToggle] = useState(false);
   const [data, setData] = useState(null);
+  const [loadData, setLoadData] = useState(null);
 
   useEffect(()=>{
-
+    
     const fetch = async ()=>{
+      setLoadData(true);
       try{
         const response = await axios.get('http://13.235.82.14:5000/api/get-unique-license-plate');
         const result =  response.data;
   
         if(result.Bool){
           setData(result.data);
+          setLoadData(false)
         }
         else{
           console.log('reject your request');
@@ -51,7 +54,7 @@ const Dashboard = () => {
             <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
                 <DashboardNavBar  toggleHandle={toggleHandle} />
                 <DashboardTotalCard data={data} />
-                <DashboardHeroSection data={data} />
+                <DashboardHeroSection data={data} loadData={loadData} />
             </main>
         </div>
     </>
