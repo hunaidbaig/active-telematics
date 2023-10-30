@@ -17,10 +17,10 @@ function App() {
         <Route path='/signin' element={<Signin />} />
         {/* <Route path='/signup' element={<Signup />} /> */}
 
-        <Route path='/' element={ <ProtectedRoutes><Dashboard /></ProtectedRoutes>} /> 
+        {/* <Route path='/uploads' element={ <ProtectedRoutes><Dashboard /></ProtectedRoutes>} /> 
         <Route  path='/number-plate' element={<ProtectedRoutes><NumberPlate/></ProtectedRoutes> }/>
-        <Route  path='/face-recognition' element={ <ProtectedRoutes><FaceRecognition/></ProtectedRoutes> }/>
-        <Route  path='/uploads' element={ <ProtectedRoutes><Uploads/></ProtectedRoutes> }/>
+        <Route  path='/face-recognition' element={ <ProtectedRoutes><FaceRecognition/></ProtectedRoutes> }/> */}
+        <Route  path='/' element={ <ProtectedRoutes><Uploads/></ProtectedRoutes> }/>
       </Routes>
     </>
   );

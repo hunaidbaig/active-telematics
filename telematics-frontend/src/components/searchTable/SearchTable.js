@@ -161,7 +161,7 @@ const cleanHandle = ()=>{
       modalVisible &&
       <div id="myModal" className="my-modal" >
         <span className="close" onClick={closeModal}>&times;</span>
-        <img className="modal-content" id="img01" src= {process.env.PUBLIC_URL+currentImage} alt={'number plate '}
+        <img className="modal-content" id="img01" src= {process.env.PUBLIC_URL+"/frames/"+currentImage} alt={'number plate '}
           onError={(e)=>{
             e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
           }}
