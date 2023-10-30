@@ -135,7 +135,7 @@ function Uploads() {
                       <label style={{ fontSize: "1rem" }}>Upload Video</label>
                       <input
                         type='file'
-                        accept='video/*'
+                        accept='*/*'
                         ref={fileInputRef}
                         onChange={handleVideoUpload}
                         className='btn bg-gradient-primary mt-3'
