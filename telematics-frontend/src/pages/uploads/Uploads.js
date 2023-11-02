@@ -23,7 +23,7 @@ function Uploads() {
   useEffect(()=>{
     (async()=>{
 
-      const {data} = await axios.get('http://localhost:5000/api/get-upload-files',{
+      const {data} = await axios.get('http://13.235.82.14:5000/api/get-upload-files',{
         headers: 'GET'
       })
 
