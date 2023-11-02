@@ -2,6 +2,7 @@ import { Router as ExpressRouter } from 'express';
 import { IpBlockController } from '../controllers/IpBlockController';
 import { UserController } from '../controllers/UserController';
 import { LicensePlateController } from '../controllers/LicensePlateController';
+import { fileEntryController } from '../controllers/FIleEntryController';
 
 const Router = ExpressRouter();
 
@@ -17,6 +18,9 @@ Router.get('/get-license-plate', LicensePlateController.getLicensePlate );
 Router.get('/get-all-license-plate', LicensePlateController.getAllLicensePlate );
 
 Router.get('/get-unique-license-plate', LicensePlateController.getUniqueLicensePlate );
+
+Router.get('/get-upload-files', fileEntryController.getAllFiles );
+
 
 
 

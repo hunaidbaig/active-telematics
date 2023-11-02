@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 // import { toast } from 'react-toastify'
 import UploadsNavbar from "./UploadsNavbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -14,7 +14,24 @@ function Uploads() {
   const [file, setFile] = useState(null);
   const [show, setShow] = useState(false);
   const [loader, setLoader] = useState(false)
-  const [status, setStatus] = useState(false)
+  const [status, setStatus] = useState(false);
+  const [uploadData, setUploadData] = useState(null);
+  const [reRender, setRerender] = useState(false);
+
+
+
+  useEffect(()=>{
+    (async()=>{
+
+      const {data} = await axios.get('http://localhost:5000/api/get-upload-files',{
+        headers: 'GET'
+      })
+
+      setUploadData([...data.data])
+      // console.log(data, 'data')
+
+    })()
+  },[reRender])
 
 
   const toggleHandle = () => {
@@ -48,7 +65,7 @@ function Uploads() {
       return;
     }
 
-    console.log('check', file)
+    // console.log('check', file)
     setShow(true);
     setLoader(true);
     const formData = new FormData();
@@ -69,6 +86,7 @@ function Uploads() {
       setLoader(false);
       setSelectedOption('');
       fileInputRef.current.value = null;
+      setRerender(!reRender);
       setStatus('Your video successfully processed!')
       // toast.success(' Your video successfully processed!', {
       //   position: "top-center",
@@ -100,17 +118,61 @@ function Uploads() {
   }
 
   return (
+    <>
     <div
       className={`g-sidenav-show  bg-gray-100 ${
         dashboardToggle ? "g-sidenav-pinned" : ""
       } `}
     >
-      <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
+    <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
+
       <main className='main-content position-relative max-height-vh-100 h-100 border-radius-lg '>
         <UploadsNavbar toggleHandle={toggleHandle} />
         <div className='container-fluid py-4'>
           <div className='row' style={{ width: "100%" }}>
             <div className='col-12'>
+
+              {/* tabel starting */}
+              <h5 style={{ padding: '1rem' }}>File uploads</h5>
+              <div className="card mb-4">
+                <div class="card-body px-0 pt-0 pb-2">
+                  <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                      <thead>
+                        <tr>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            Date
+                          </th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            Time 
+                          </th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            video
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          uploadData && 
+                            uploadData.map((item, index)=>(
+                              <tr key={index}>
+                                <td class="text-xs font-weight-bold mb-0 text-secondary">{item.input_date.split('T')[0]}</td>
+                                <td class="text-xs font-weight-bold mb-0 text-secondary">
+                                  {item.input_timestamp.replaceAll('-', ':')}
+                                </td>
+                                <td class="text-xs font-weight-bold mb-0 text-secondary">
+                                  {item.video_path}
+                                </td>
+                              </tr> 
+                            ))
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              {/* tabel starting */}
+
               <div className='card mb-4'>
                 <div className='card-header'>
                   <label style={{ fontSize: "1rem" }}>Input Type:</label>
@@ -166,6 +228,7 @@ function Uploads() {
         </div>
       </main>
     </div>
+    </>
   );
 }
 
