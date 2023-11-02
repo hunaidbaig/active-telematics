@@ -32,3 +32,8 @@ option{
 .column img:hover{
   cursor: pointer;
 }
+
+.scrolable{
+  height: 200px;
+  scroll-behavior: smooth;
+}
