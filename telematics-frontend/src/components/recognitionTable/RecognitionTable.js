@@ -85,23 +85,23 @@ function RecognitionTable({ images, loading }) {
         />
       </div>
     }
-            <div class='table-responsive p-0'>
+            <div className='table-responsive p-0'>
               {
                 loading && <Loader style={{ display: 'flex', justifyContent: 'center' }} />
               }
               {
                 !loading && 
-                <table class='table align-items-center mb-0'>
+                <table className='table align-items-center mb-0'>
                   {images && 
                     <thead>
                       <tr>
-                        <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
+                        <th className='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
                           Time
                         </th>
-                        <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
+                        <th className='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
                           Image
                         </th>
-                        <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
+                        <th className='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>
                           Location
                         </th>
                       </tr>
@@ -112,13 +112,13 @@ function RecognitionTable({ images, loading }) {
                   return(
                     
                     <tr>
-                      <td class='text-xs font-weight-bold mb-0 text-secondary'>
+                      <td className='text-xs font-weight-bold mb-0 text-secondary'>
                         {imageUrl[4]}
                       </td>
                     
                         
                         
-                            <td class='text-xs font-weight-bold mb-0 text-secondary'>
+                            <td className='text-xs font-weight-bold mb-0 text-secondary'>
                           <div className="column" key={index}>
                               <img
                                 src={process.env.PUBLIC_URL+'/assets/'+imageUrl[0]}

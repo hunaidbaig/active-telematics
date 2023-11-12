@@ -37,3 +37,14 @@ option{
   height: 200px;
   scroll-behavior: smooth;
 }
+
+.car_detail{
+  margin-top: 1rem;
+  border-top: 1px #e5e5e5 solid;
+  padding-top: 1rem;
+  line-height: 1.8rem;
+}
+
+.car_detail h6{
+  margin-right: 1rem;
+}

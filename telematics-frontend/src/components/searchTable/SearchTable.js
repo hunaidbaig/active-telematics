@@ -171,7 +171,7 @@ const cleanHandle = ()=>{
       <div className="row">
         <div className="col-12">
           <div className="card mb-4">
-            <div class="card-header pb-0">
+            <div className="card-header pb-0">
               {
                 show ? <DateRangePicker showOneCalendar style={{ width: '100%' }} onOk={ (value) => dateChangeHandler(value) } onClean={()=> cleanHandle()} /> 
                 : 
@@ -211,27 +211,27 @@ const cleanHandle = ()=>{
                 <option value="licenseNumberScore">License No score</option>
               </select>
             </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
+            <div className="card-body px-0 pt-0 pb-2">
+              <div className="table-responsive p-0">
+                <table className="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      {/* <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                      {/* <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         Car ID
                       </th> */}
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                      <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         Date
                       </th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                      <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         License number 
                       </th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                      <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         license Number Score
                       </th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                      <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         Image
                       </th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                      <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         Location
                       </th>
                     </tr>
@@ -245,17 +245,17 @@ const cleanHandle = ()=>{
 
                       return(
                           <tr key={index}>
-                          {/* <td class="text-xs font-weight-bold mb-0 text-secondary">
+                          {/* <td className="text-xs font-weight-bold mb-0 text-secondary">
                             {item.car_id}
                           </td> */}
-                          <td class="text-xs font-weight-bold mb-0 text-secondary">{item.processedTime}</td>
-                          <td class="text-xs font-weight-bold mb-0 text-secondary">
+                          <td className="text-xs font-weight-bold mb-0 text-secondary">{item.processedTime}</td>
+                          <td className="text-xs font-weight-bold mb-0 text-secondary">
                             {item.licenseNumber}
                           </td>
-                          <td class="text-xs font-weight-bold mb-0 text-secondary">
+                          <td className="text-xs font-weight-bold mb-0 text-secondary">
                             {item.licenseNumberScore}
                           </td>
-                          <td class="text-xs font-weight-bold mb-0 " >
+                          <td className="text-xs font-weight-bold mb-0 " >
                           <img
                             id="myImg"
                             src={plateImage2}

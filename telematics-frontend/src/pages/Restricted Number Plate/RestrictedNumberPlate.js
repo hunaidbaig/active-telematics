@@ -1,0 +1,190 @@
+import React, { useEffect, useState } from 'react'
+import { Loader } from "rsuite";
+import Sidebar from '../../components/Sidebar/Sidebar'
+import axios from 'axios';
+import NavBar from '../../components/navBar/NavBar';
+
+const RestrictedNumberPlate = () => {
+
+    const [dashboardToggle, setDashboardToggle] = useState(false);
+    const [numInput, setNumInput] = useState('');
+    const [data, setData] = useState(null);
+    const [loadData, setLoadData] = useState(null);
+
+    useEffect(() => {
+
+        const fetch = async () => {
+            setLoadData(true);
+            try {
+                const response = await axios.get('http://localhost:5000/api/get-restricted-number-plate');
+                const result = response.data;
+
+                if (result.Bool) {
+                    // console.log(result.data)
+                    setData(result.data);
+                    setLoadData(false)
+                }
+                else {
+                    console.log('reject your request');
+                }
+
+                // console.log(result, 'result');
+            } catch (e) {
+                console.log(e);
+            }
+
+        }
+
+        fetch();
+
+    }, [])
+
+    const toggleHandle = () => {
+        setDashboardToggle(!dashboardToggle);
+    }
+
+
+    const onSubmit = async ()=>{
+        // console.log('click')
+        if(numInput.length>0){
+            const obj = {
+                licenseNumber : numInput,
+                status: 'pending'
+            }
+            setLoadData(true);
+            try {
+                const response = await axios.post('http://localhost:5000/api/add-restricted-number-plate', obj);
+                const result = response.data;
+    
+                if (result.Bool) {
+                    // console.log(result.data)
+                    setData([ ...data, result.data]);
+                    setLoadData(false)
+                    setNumInput('')
+                }
+                else {
+                    console.log('reject your request');
+                    setNumInput('')
+                }
+    
+                // console.log(result, 'result');
+            } catch (e) {
+                console.log(e);
+                setNumInput('')
+            }
+        }
+        else{
+            console.log('Enter something');
+        }
+        
+    }
+
+
+    const onDelete = async (id)=>{
+        // console.log(id, 'id')
+
+        try{
+
+            const filterData = data.filter(item=> item.id !== id);
+            setData(filterData);
+    
+            const response = await axios.delete(`http://localhost:5000/api/remove-restricted-number-plate/${id}`);
+            const result = response.data;
+    
+            if(result.Bool){
+                console.log(result.message);
+            }
+            else{
+                console.log('network error')
+            }
+        }
+        catch(e){
+            console.log(e);
+        }
+
+
+    }
+
+
+
+    return (
+        <div className={`g-sidenav-show  bg-gray-100 ${dashboardToggle ? 'g-sidenav-pinned' : ''} `}>
+            <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
+            <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+                <NavBar toggleHandle={toggleHandle} title={'Restricted Number Plate'} temp={true} />
+                <div className='container-fluid py-4'>
+                    <div className='row' style={{ width: "100%" }}>
+                        <div className='col-12'>
+                            <div className="search-bar">
+                                <input
+                                    type="text"
+                                    placeholder="Enter Number Plate"
+                                    value={numInput}
+                                    onChange={(e) => setNumInput(e.target.value)}
+                                    className="form-control"
+                                />
+
+                            </div>
+                            <div className='col-12'>
+                                <button disabled={!numInput.length>0} className="btn bg-gradient-primary mt-3 w-100" onClick={()=>onSubmit()}>Add number plate</button>
+                            </div>
+
+                            {/* tabel starting */}
+                            <h5 style={{ padding: '1rem' }}>Restricted Cars</h5>
+                            <div className="card mb-4">
+                                <div className="card-body px-0 pt-0 pb-2">
+                                    <div className="table-responsive p-0">
+                                        <table className="table align-items-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                        Serial No
+                                                    </th>
+                                                    <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                        License Number
+                                                    </th>
+                                                   
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    loadData ?
+                                                        <Loader />                                                   
+                                                    :
+                                                        data?.map((item,index)=>{
+                                                            return(
+                                                            <tr key={index}>
+                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">{index}</td>
+                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">{item.licenseNumber}</td>
+                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">
+                                                                    <button style={{
+                                                                        background: 'red',
+                                                                        color: 'white',
+                                                                        padding: '0.5rem',
+                                                                        borderRadius: '10px'
+                                                                    }}
+                                                                    onClick={()=> onDelete(item.id)}
+                                                                    >
+                                                                        Delete me
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        )})
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* tabel starting */}
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+    )
+}
+
+export default RestrictedNumberPlate;

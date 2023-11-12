@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import NumberPlateNavbar from "./NumberPlateNavbar";
 import SearchTable from "../../components/searchTable/SearchTable";
+import NavBar from "../../components/navBar/NavBar";
 function NumberPlate() {
   const [dashboardToggle, setDashboardToggle] = useState(false);
   const [ carsData, setCarsData ] = useState([]);
@@ -150,8 +150,8 @@ function NumberPlate() {
       } `}
     >
       <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
-      <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        <NumberPlateNavbar toggleHandle={toggleHandle} />
+      <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <NavBar toggleHandle={toggleHandle} title={'Number Plate'} temp={true} /> 
         <div className="container-fluid py-4">
           <SearchTable data={carsData} loading={loading} />
         </div>

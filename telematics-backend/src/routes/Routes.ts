@@ -3,6 +3,7 @@ import { IpBlockController } from '../controllers/IpBlockController';
 import { UserController } from '../controllers/UserController';
 import { LicensePlateController } from '../controllers/LicensePlateController';
 import { fileEntryController } from '../controllers/FIleEntryController';
+import { RNumberPLateController } from '../controllers/RNumberPlateController';
 
 const Router = ExpressRouter();
 
@@ -20,6 +21,12 @@ Router.get('/get-all-license-plate', LicensePlateController.getAllLicensePlate )
 Router.get('/get-unique-license-plate', LicensePlateController.getUniqueLicensePlate );
 
 Router.get('/get-upload-files', fileEntryController.getAllFiles );
+
+Router.get('/get-restricted-number-plate', RNumberPLateController.allNumberPlate );
+Router.post('/add-restricted-number-plate', RNumberPLateController.addNumberPlate );
+Router.post('/update-restricted-number-plate', RNumberPLateController.updateNumberPlate );
+Router.delete('/remove-restricted-number-plate/:id', RNumberPLateController.removeNumberPlate );
+
 
 
 

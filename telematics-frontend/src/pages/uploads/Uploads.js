@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 // import { toast } from 'react-toastify'
-import UploadsNavbar from "./UploadsNavbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import axios from "axios";
 import { Loader } from "rsuite";
+import NavBar from "../../components/navBar/NavBar";
 
 function Uploads() {
   const [dashboardToggle, setDashboardToggle] = useState(false);
@@ -127,7 +127,7 @@ function Uploads() {
     <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
 
       <main className='main-content position-relative max-height-vh-100 h-100 border-radius-lg '>
-        <UploadsNavbar toggleHandle={toggleHandle} />
+        <NavBar toggleHandle={toggleHandle} title={'Uploads'} temp={true} />
         <div className='container-fluid py-4'>
           <div className='row' style={{ width: "100%" }}>
             <div className='col-12'>
@@ -135,18 +135,18 @@ function Uploads() {
               {/* tabel starting */}
               <h5 style={{ padding: '1rem' }}>File uploads</h5>
               <div className="card mb-4">
-                <div class="card-body px-0 pt-0 pb-2">
-                  <div class="table-responsive p-0 scrolable">
-                    <table class="table align-items-center mb-0">
+                <div className="card-body px-0 pt-0 pb-2">
+                  <div className="table-responsive p-0 scrolable">
+                    <table className="table align-items-center mb-0">
                       <thead>
                         <tr>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                          <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             Date
                           </th>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                          <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             Time 
                           </th>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                          <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             video
                           </th>
                         </tr>
@@ -156,11 +156,11 @@ function Uploads() {
                           uploadData && 
                             uploadData.map((item, index)=>(
                               <tr key={index}>
-                                <td class="text-xs font-weight-bold mb-0 text-secondary">{item.input_date.split('T')[0]}</td>
-                                <td class="text-xs font-weight-bold mb-0 text-secondary">
+                                <td className="text-xs font-weight-bold mb-0 text-secondary">{item.input_date.split('T')[0]}</td>
+                                <td className="text-xs font-weight-bold mb-0 text-secondary">
                                   {item.input_timestamp.replaceAll('-', ':')}
                                 </td>
-                                <td class="text-xs font-weight-bold mb-0 text-secondary">
+                                <td className="text-xs font-weight-bold mb-0 text-secondary">
                                   {item.video_path}
                                 </td>
                               </tr> 

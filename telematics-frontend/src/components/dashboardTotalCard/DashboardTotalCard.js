@@ -11,8 +11,8 @@ const DashboardTotalCard = ({data}) => {
     ]
 
   return (
-    <div class="container-fluid py-4">
-      <div class="row">
+    <div className="container-fluid py-4">
+      <div className="row">
         {
             cardList.map((card, index)=>(
                 <Card title={card.title} value={card.value} total={card.total} />
