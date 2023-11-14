@@ -30,7 +30,7 @@ const RestrictedNumberPlate = () => {
             }
             setLoadData(true);
             try {
-                const response = await axios.post('http://localhost:5000/api/add-restricted-number-plate', obj);
+                const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/add-restricted-number-plate`, obj);
                 const result = response.data;
     
                 if (result.Bool) {
@@ -65,7 +65,7 @@ const RestrictedNumberPlate = () => {
             const filterData = data.filter(item=> item.id !== id);
             setData(filterData);
     
-            const response = await axios.delete(`http://localhost:5000/api/remove-restricted-number-plate/${id}`);
+            const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/remove-restricted-number-plate/${id}`);
             const result = response.data;
     
             if(result.Bool){
