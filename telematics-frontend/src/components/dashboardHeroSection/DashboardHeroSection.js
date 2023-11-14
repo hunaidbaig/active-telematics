@@ -38,7 +38,7 @@ const DashboardHeroSection = ({ data, loadData }) => {
       tension: 0.4,
       borderWidth: 0,
       pointRadius: 0,
-      borderColor: "#cb0c9f",
+      borderColor: "#98C93C",
       borderWidth: 3,
       // backgroundColor: 'rgba(0, 230, 0, 50)',
       fill: true,

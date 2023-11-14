@@ -108,12 +108,16 @@ const Sidebar = ({ dashboardToggle, toggleHandle }) => {
 
 
     return (
-        <aside className={`sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" ${dashboardToggle ?'bg-white' : ''} `} id="sidenav-main">
+        <aside className={`sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" ${dashboardToggle ?'bg-white' : ''} `} id="sidenav-main"
+            style={{
+                zIndex: '11'
+            }}
+            >
             <div className="sidenav-header">
                 <i className="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" onClick={(e)=> toggleHandle()} aria-hidden="true" id="iconSidenav"></i>
                 <Link className="navbar-brand m-0" to="/" target="_blank">
                     <img src={process.env.PUBLIC_URL + "/assets/img/logo-ct.png"} className="navbar-brand-img h-100" alt="main_logo" />
-                    <span className="ms-1 font-weight-bold">Welcome {user?.username}</span>
+                    {/* <span className="ms-1 font-weight-bold">Welcome {user?.username}</span> */}
                 </Link>
             </div>
             <hr className="horizontal dark mt-0" />
@@ -140,7 +144,7 @@ const Sidebar = ({ dashboardToggle, toggleHandle }) => {
                         <div className="docs-info">
                             <h6 className="text-white up mb-0">Need help?</h6>
                             <p className="text-xs font-weight-bold">Please Contact Us</p>
-                             <a  target="_blank" className="btn btn-white btn-sm w-100 mb-0">Contatct Us</a> 
+                             <Link style={{ textDecoration: 'none' }} className="btn btn-white btn-sm w-100 mb-0">Contatct Us</Link> 
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import "./FaceRecognition.css";
-import ImageGrid from "../../components/imageGrid/ImageGrid";
+// import ImageGrid from "../../components/imageGrid/ImageGrid";
 import axios from "axios";
 import RecognitionTable from "../../components/recognitionTable/RecognitionTable";
 import NavBar from "../../components/navBar/NavBar";
@@ -15,7 +15,6 @@ function FaceRecognition() {
   const onFileChange = (event) => {
     setFile(event.target.files[0]);
     setLoading(true)
-    
   };
 
   const toggleHandle = () => {
@@ -28,7 +27,7 @@ function FaceRecognition() {
 
   const onUpload = async () => {
     if (!file) {
-      console.log("No file selected");
+      // console.log("No file selected");
       setLoading(null)
       return;
     }

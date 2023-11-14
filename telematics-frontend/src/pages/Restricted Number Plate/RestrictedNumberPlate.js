@@ -1,41 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Loader } from "rsuite";
+// import { Loader } from "rsuite";
 import Sidebar from '../../components/Sidebar/Sidebar'
 import axios from 'axios';
 import NavBar from '../../components/navBar/NavBar';
+import UseFetch from '../../hooks/UseFetch';
 
 const RestrictedNumberPlate = () => {
 
     const [dashboardToggle, setDashboardToggle] = useState(false);
     const [numInput, setNumInput] = useState('');
-    const [data, setData] = useState(null);
-    const [loadData, setLoadData] = useState(null);
+    const { data, setData, loadData, setLoadData, fetch } = UseFetch();
 
     useEffect(() => {
-
-        const fetch = async () => {
-            setLoadData(true);
-            try {
-                const response = await axios.get('http://localhost:5000/api/get-restricted-number-plate');
-                const result = response.data;
-
-                if (result.Bool) {
-                    // console.log(result.data)
-                    setData(result.data);
-                    setLoadData(false)
-                }
-                else {
-                    console.log('reject your request');
-                }
-
-                // console.log(result, 'result');
-            } catch (e) {
-                console.log(e);
-            }
-
-        }
-
-        fetch();
+        fetch('/get-restricted-number-plate');
 
     }, [])
 
@@ -143,13 +120,16 @@ const RestrictedNumberPlate = () => {
                                                     <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                         License Number
                                                     </th>
+                                                    <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                        
+                                                    </th>
                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {
                                                     loadData ?
-                                                        <Loader />                                                   
+                                                        loadData                                                   
                                                     :
                                                         data?.map((item,index)=>{
                                                             return(
@@ -157,12 +137,12 @@ const RestrictedNumberPlate = () => {
                                                                 <td className="text-xs font-weight-bold mb-0 text-secondary">{index}</td>
                                                                 <td className="text-xs font-weight-bold mb-0 text-secondary">{item.licenseNumber}</td>
                                                                 <td className="text-xs font-weight-bold mb-0 text-secondary">
-                                                                    <button style={{
-                                                                        background: 'red',
-                                                                        color: 'white',
-                                                                        padding: '0.5rem',
-                                                                        borderRadius: '10px'
-                                                                    }}
+                                                                    <button className='bg-gradient-primary'
+                                                                        style={{
+                                                                            padding : '0.4rem',
+                                                                            borderRadius: '10px',
+                                                                            color: '#ffffff'
+                                                                        }}
                                                                     onClick={()=> onDelete(item.id)}
                                                                     >
                                                                         Delete me

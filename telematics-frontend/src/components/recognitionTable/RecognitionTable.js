@@ -78,10 +78,7 @@ function RecognitionTable({ images, loading }) {
         <img className="modal-content" id="img01" style={{
           height:"800px",
           objectFit:"contain"
-        }} src= {process.env.PUBLIC_URL+'/assets/images/face_images/'+currentImage} alt={'number plate'}
-          onError={(e)=>{
-            e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
-          }}
+        }} src= {currentImage} alt={'number plate'}
         />
       </div>
     }
@@ -121,12 +118,12 @@ function RecognitionTable({ images, loading }) {
                             <td className='text-xs font-weight-bold mb-0 text-secondary'>
                           <div className="column" key={index}>
                               <img
-                                src={process.env.PUBLIC_URL+'/assets/'+imageUrl[0]}
+                                src={process.env.REACT_APP_BASE_IMAGE+'/'+imageUrl[0]}
                                 alt={`${index}`}
                                 style={{ width: "50%" }}
                                 onClick={() => {
 
-                                  openModal(process.env.PUBLIC_URL+'/assets/images/face_images/'+imageUrl[0], 'Snow')
+                                  openModal(process.env.REACT_APP_BASE_IMAGE+'/'+imageUrl[0], 'Snow')
                                 }}
                               />
                             </div>

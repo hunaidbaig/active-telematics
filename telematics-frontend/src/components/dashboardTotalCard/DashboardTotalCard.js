@@ -15,7 +15,7 @@ const DashboardTotalCard = ({data}) => {
       <div className="row">
         {
             cardList.map((card, index)=>(
-                <Card title={card.title} value={card.value} total={card.total} />
+                <Card key={index} title={card.title} value={card.value} total={card.total} />
             ))
         }
       </div>

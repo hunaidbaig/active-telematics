@@ -1,16 +1,11 @@
 import React, { useState , useRef } from "react";
 import "./searchTable.css";
 import DateRangePicker from 'rsuite/DateRangePicker';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-delete L.Icon.Default.prototype._getIconUrl;
+import Map from "../map/Map";
+import moment from "moment";
+// import { Loader } from "rsuite";
 
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-});
 const SearchTable = ({ data, loading }) => {
   const [show, setShow] = useState(false);
   const [filter, setFilter] = useState("");
@@ -22,54 +17,6 @@ const SearchTable = ({ data, loading }) => {
   const [dateSelected, setDateSelected] = useState(false);
   const [licenseNumberFilter, setLicenseNumberFilter] = useState("");
 
-
-
-  const mapRef = useRef(null);
-
-  const startPos = useRef({ x: 0, y: 0 });
-  const endPos = useRef({ x: 0, y: 0 });
-
-  const handleMouseDown = (e) => {
-      startPos.current = { x: e.clientX, y: e.clientY };
-  };
-
-  const handleMouseUp = (e) => {
-      endPos.current = { x: e.clientX, y: e.clientY };
-  };
-
-  const handleMapClick = () => {
-      const dx = endPos.current.x - startPos.current.x;
-      const dy = endPos.current.y - startPos.current.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-
-      if (distance < 10) {  // If mouse moved less than 10 pixels, it's likely a click not a drag
-          const mapEl = mapRef.current;
-        console.log(mapEl);
-      if (!document.fullscreenElement) {
-        
-          if (mapEl?.requestFullscreen) {
-              mapEl.requestFullscreen();
-          } else if (mapEl?.mozRequestFullScreen) { /* Firefox */
-              mapEl.mozRequestFullScreen();
-          } else if (mapEl?.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-              mapEl.webkitRequestFullscreen();
-          } else if (mapEl?.msRequestFullscreen) { /* IE/Edge */
-              mapEl.msRequestFullscreen();
-          }
-      } else {
-
-          if (document.exitFullscreen) {
-              document.exitFullscreen();
-          } else if (document.mozCancelFullScreen) { /* Firefox */
-              document.mozCancelFullScreen();
-          } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
-              document.webkitExitFullscreen();
-          } else if (document.msExitFullscreen) { /* IE/Edge */
-              document.msExitFullscreen();
-          }
-      }
-      }
-  };
 
 const filteredData = data.filter((item) => {
 
@@ -161,10 +108,7 @@ const cleanHandle = ()=>{
       modalVisible &&
       <div id="myModal" className="my-modal" >
         <span className="close" onClick={closeModal}>&times;</span>
-        <img className="modal-content" id="img01" src= {process.env.PUBLIC_URL+"/frames/"+currentImage} alt={'number plate '}
-          onError={(e)=>{
-            e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
-          }}
+        <img className="modal-content" id="img01" src= {currentImage} alt={'number plate '}
         />
       </div>
     }
@@ -216,9 +160,6 @@ const cleanHandle = ()=>{
                 <table className="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      {/* <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                        Car ID
-                      </th> */}
                       <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         Date
                       </th>
@@ -237,64 +178,35 @@ const cleanHandle = ()=>{
                     </tr>
                   </thead>
                   <tbody>
-                    { loading ? <p>loading</p> : filteredDataWithLicenseNumber.map((item, index) => {
-                      // console.log(item);
-                      // const plateImage = `${item.image.split('/').slice(4).join('/')}`;
+                    { loading ? loading : filteredDataWithLicenseNumber.map((item, index) => {
+                      
                       const plateImage = item.image
-                      const plateImage2 = `${process.env.PUBLIC_URL}/assets/images/${plateImage}`;
+                      const plateImage2 = `${process.env.REACT_APP_BASE_IMAGE}/${plateImage}`;
 
                       return(
                           <tr key={index}>
-                          {/* <td className="text-xs font-weight-bold mb-0 text-secondary">
-                            {item.car_id}
-                          </td> */}
-                          <td className="text-xs font-weight-bold mb-0 text-secondary">{item.processedTime}</td>
-                          <td className="text-xs font-weight-bold mb-0 text-secondary">
-                            {item.licenseNumber}
-                          </td>
-                          <td className="text-xs font-weight-bold mb-0 text-secondary">
-                            {item.licenseNumberScore}
-                          </td>
-                          <td className="text-xs font-weight-bold mb-0 " >
-                          <img
-                            id="myImg"
-                            src={plateImage2}
-                            alt="Snow"
-                            width={'50'}
-                            onClick={() => {
+                            <td className="text-xs font-weight-bold mb-0 text-secondary">{moment(item.processedTime).format('MMMM Do YYYY, h:mm:ss a')}</td>
+                            <td className="text-xs font-weight-bold mb-0 text-secondary">
+                              {item.licenseNumber}
+                            </td>
+                            <td className="text-xs font-weight-bold mb-0 text-secondary">
+                              {item.licenseNumberScore}
+                            </td>
+                            <td className="text-xs font-weight-bold mb-0 " >
+                              <img
+                                id="myImg"
+                                src={plateImage2}
+                                alt="Snow"
+                                width={'50'}
+                                onClick={() => {
 
-                              openModal(plateImage2, 'Snow')
-                            }}
-                            // onError={(e)=>{
-                            //   console.log(plateImage2)
-                            //   //e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
-                            // }}
-                          />
-                        
-                            {/* <img src={plateImage2} alt={index} width="50"
-                              onError={(e)=>{
-                                e.target.src = process.env.PUBLIC_URL+`/assets/images/2023-10-09 12:44:46_frame_18.jpg`
-                              }}
-
-                            /> */}
-                          </td>
-                          <td >
-                            <div 
-                            
-                              // ref={mapRef} 
-                              ref={el => { mapRef.current = el; }}
-                              style={{ height: "80px", width: "100%", display: 'flex', flexDirection: 'column' }}
-                              onMouseDown={handleMouseDown}
-                              onMouseUp={handleMouseUp}
-                              onClick={handleMapClick}
-                          >
-                              <MapContainer center={[item.latitude, item.longitude]} zoom={13} style={{ flex: 1, borderRadius:"15px" }}>
-                                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                                  <Marker position={[item.latitude, item.longitude]}></Marker>
-                                  {/* <Marker position={[item.latitude+1, item.longitude+1]}></Marker> */}
-                              </MapContainer>
-                            </div>
-                          </td>
+                                  openModal(plateImage2, 'Snow')
+                                }}
+                              />
+                            </td>
+                            <td>
+                              <Map longitude={item.longitude} latitude={item.latitude} />
+                            </td>
                         </tr>
                       )
                     })}

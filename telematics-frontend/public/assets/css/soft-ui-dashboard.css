@@ -2728,9 +2728,9 @@ progress {
 .form-control:focus {
   color: #495057;
   background-color: #fff;
-  border-color: #e293d3;
+  border-color: #c4e587;
   outline: 0;
-  box-shadow: 0 0 0 2px #e9aede;
+  box-shadow: 0 0 0 2px #aede55;
 }
 
 .form-control::-webkit-date-and-time-value {
@@ -5014,7 +5014,7 @@ fieldset:disabled .btn {
 .navbar>.container-xl,
 .navbar>.container-xxl {
   display: flex;
-  flex-wrap: inherit;
+  /* flex-wrap: inherit; */
   align-items: center;
   justify-content: space-between;
 }
@@ -21352,7 +21352,7 @@ label,
 }
 
 .bg-gradient-primary {
-  background-image: linear-gradient(310deg, #7928CA 0%, #FF0080 100%);
+  background-image: linear-gradient(310deg, #666667 0%, #98C93C 100%);
 }
 
 .bg-gradient-secondary {
@@ -21364,7 +21364,7 @@ label,
 }
 
 .bg-gradient-info {
-  background-image: linear-gradient(310deg, #2152ff 0%, #21d4fd 100%);
+  background-image: linear-gradient(310deg, #98C93C 0%, #666667 100%);
 }
 
 .bg-gradient-warning {
@@ -22078,6 +22078,7 @@ hr.horizontal.gray-light {
   .g-sidenav-show .navbar:not(.sidenav).navbar-main .navbar-nav,
   .g-sidenav-show .navbar:not(.mixed-navbar) .navbar-nav {
     flex-direction: row;
+    gap: 1rem
   }
 
   .navbar.navbar-transparent .navbar-collapse {
@@ -22913,7 +22914,7 @@ hr.horizontal.gray-light {
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon {
-  background-image: linear-gradient(310deg, #cb0c9f 0%, #cb0c9f 100%);
+  background-image: linear-gradient(310deg, #666667 0%, #98C93C 100%);
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon svg .color-background,
@@ -24573,7 +24574,7 @@ p {
 }
 
 .text-gradient.text-info {
-  background-image: linear-gradient(310deg, #2152FF, #21D4FD);
+  background-image: linear-gradient(310deg, #98C93C, #666667);
 }
 
 .text-gradient.text-success {

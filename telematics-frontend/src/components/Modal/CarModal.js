@@ -1,8 +1,10 @@
 import { Modal, Button } from 'rsuite';
+import Map from '../map/Map';
+import moment from 'moment';
 
 
 const CarModal = ({ handleClose, open, car  }) => {
-  // console.log('open')
+  console.log('open')
   return (
     <>
       <Modal open={open} onClose={handleClose}>
@@ -12,14 +14,18 @@ const CarModal = ({ handleClose, open, car  }) => {
         <Modal.Body>
           <div>
               <div>
-                <img width={'100%'} src={process.env.PUBLIC_URL+'/assets/images/frames/09:42:25.950374_frame_18.jpg'} alt='car detail' />
+                <img width={'100%'} src={process.env.REACT_APP_BASE_IMAGE+`/${car.image}`} alt='car detail' />
               </div>
               <div className='car_detail'>
                 <h6>License Number:</h6>
                 <span>{car.license_number}</span>
                 <br />
-                <h6>Process Time:</h6>
-                <span>{car.processed_time}</span>
+                <h6>Detected Time:</h6>
+                <span>{moment(car.processed_time).format('MMMM Do YYYY, h:mm:ss a')}</span>
+              </div>
+              <div>
+                <h6 style={{ marginBottom: '0.5rem' }}>Location:</h6>
+                <Map longitude={car.longitude} latitude={car.latitude} />
               </div>
           </div>
         </Modal.Body>

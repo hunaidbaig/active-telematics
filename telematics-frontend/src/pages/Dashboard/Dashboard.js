@@ -8,27 +8,27 @@ import { toast } from 'react-toastify';
 import NotificationCard from '../../components/notificationCard/NotificationCard';
 import CarModal from '../../components/Modal/CarModal';
 
-const Dashboard = () => {
+const Dashboard = ({ handleOpen }) => {
 
   const [dashboardToggle, setDashboardToggle] = useState(false);
   const [data, setData] = useState([]);
   const [restrictedData, setRestrictedData] = useState([]);
   const [loadData, setLoadData] = useState(null);
   const [count, setCount] = useState(0);
-  const [open, setOpen] = React.useState(false);
-  const [carData, setCarData] = React.useState(null);
+  // const [open, setOpen] = React.useState(false);
+  // const [carData, setCarData] = React.useState(null);
 
 
 
-  const handleOpen = (car) => {
-    // console.log(car)
-    setOpen(true)
-    setCarData({...car})
-  };
-  const handleClose = () => {
-    setOpen(false);
-    setCarData(null)
-  };
+  // const handleOpen = (car) => {
+  //   console.log(car)
+  //   setOpen(true)
+  //   setCarData({...car})
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  //   setCarData(null)
+  // };
 
   useEffect(()=>{
     const fetch = async ()=>{
@@ -125,7 +125,7 @@ const Dashboard = () => {
         result.map((item,index)=>{
           // console.log(arr[index].status);
           if(arr[index].status === 'pending'){
-            toast(<NotificationCard licenseNumber={item.license_number} time={item.processed_time} />, {
+            toast(<NotificationCard car={item} />, {
               position: "bottom-left",
               autoClose: false, // Disable auto close
               closeOnClick: false, // Disable built-in close on click
@@ -133,9 +133,10 @@ const Dashboard = () => {
               draggable: true,
               progress: undefined,
               theme: "light",
-              style:{
-                width : '600px',
-              },
+              className: 'notification-card',
+              // style:{
+              //   width : '600px',
+              // },
               onClick :()=>{
                 console.log('hello')
                 handleOpen(item);
@@ -166,9 +167,9 @@ const Dashboard = () => {
 
   return (
     <>
-        {
+        {/* {
           open && <CarModal handleClose={handleClose} open={open} car={carData} />
-        }
+        } */}
         <div className={`g-sidenav-show  bg-gray-100 ${dashboardToggle ?'g-sidenav-pinned' : ''} ` }>
 
             <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
