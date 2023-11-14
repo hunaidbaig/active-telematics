@@ -34,7 +34,7 @@ const Dashboard = ({ handleOpen }) => {
     const fetch = async ()=>{
       setLoadData(true);
       try{
-        const response = await axios.get('http://13.235.82.14:5000/api/get-unique-license-plate');
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/get-unique-license-plate`);
         const result =  response.data;
   
         if(result.Bool){
@@ -56,7 +56,7 @@ const Dashboard = ({ handleOpen }) => {
     const fetchRestricted = async ()=>{
       setLoadData(true);
       try{
-        const response = await axios.get('http://localhost:5000/api/get-restricted-number-plate');
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/get-restricted-number-plate`);
         const result =  response.data;
   
         if(result.Bool){
@@ -90,7 +90,7 @@ const Dashboard = ({ handleOpen }) => {
             status: status
         }
         try {
-            const response = await axios.post('http://localhost:5000/api/update-restricted-number-plate', obj);
+            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/update-restricted-number-plate`, obj);
             const result = response.data;
 
             if (result.Bool) {
