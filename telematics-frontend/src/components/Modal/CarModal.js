@@ -4,7 +4,7 @@ import moment from 'moment';
 
 
 const CarModal = ({ handleClose, open, car  }) => {
-  console.log('open')
+  console.log('open',car)
   return (
     <>
       <Modal open={open} onClose={handleClose}>

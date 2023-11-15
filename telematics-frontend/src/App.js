@@ -31,6 +31,7 @@ function App() {
   return (
     <>
       <ToastContainer
+        className={'toaster-main'}
         style={{
           zIndex: '111',
         }}
