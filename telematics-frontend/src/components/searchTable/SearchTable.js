@@ -185,7 +185,7 @@ const cleanHandle = ()=>{
 
                       return(
                           <tr key={index}>
-                            <td className="text-xs font-weight-bold mb-0 text-secondary">{moment(item.processedTime).format('MMMM Do YYYY, h:mm:ss a')}</td>
+                            <td className="text-xs font-weight-bold mb-0 text-secondary">{moment.utc(item.processedTime).format('MMMM Do YYYY, h:mm:ss A')}</td>
                             <td className="text-xs font-weight-bold mb-0 text-secondary">
                               {item.licenseNumber}
                             </td>

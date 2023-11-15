@@ -22,7 +22,7 @@ const NotificationCard = ({ car }) => {
                 </div>
                 <div className='notification-detail hide-detail'>
                     <h6>Detected Time:</h6>
-                    <p>{moment(car.processed_time).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                    <p>{moment.utc(car.processed_time).format('MMMM Do YYYY, h:mm:ss A')}</p>
                 </div>  
             </div>
         </div>

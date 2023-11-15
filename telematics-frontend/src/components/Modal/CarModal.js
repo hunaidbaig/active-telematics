@@ -21,7 +21,7 @@ const CarModal = ({ handleClose, open, car  }) => {
                 <span>{car.license_number}</span>
                 <br />
                 <h6>Detected Time:</h6>
-                <span>{moment(car.processed_time).format('MMMM Do YYYY, h:mm:ss a')}</span>
+                <span>{moment.utc(car.processed_time).format('MMMM Do YYYY, h:mm:ss A')}</span>
               </div>
               <div>
                 <h6 style={{ marginBottom: '0.5rem' }}>Location:</h6>
