@@ -134,7 +134,7 @@ const RestrictedNumberPlate = () => {
                                                         data?.map((item,index)=>{
                                                             return(
                                                             <tr key={index}>
-                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">{index}</td>
+                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">{index+1}</td>
                                                                 <td className="text-xs font-weight-bold mb-0 text-secondary">{item.licenseNumber}</td>
                                                                 <td className="text-xs font-weight-bold mb-0 text-secondary">
                                                                     <button className='bg-gradient-primary'
