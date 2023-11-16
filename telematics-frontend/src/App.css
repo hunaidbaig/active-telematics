@@ -54,6 +54,13 @@ option{
   width: 600px;
 }
 
+.red-class{
+  color: red !important;
+}
+
+.green-class{
+  color: green !important;
+}
 
 
 @media only screen and (max-width: 600px) {

@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 // import { toast } from 'react-toastify'
 import Sidebar from "../../components/Sidebar/Sidebar";
-import axios from "axios";
 import { Loader } from "rsuite";
 import NavBar from "../../components/navBar/NavBar";
+import { api, backendApi } from "../../api/Config";
 
 function Uploads() {
   const [dashboardToggle, setDashboardToggle] = useState(false);
@@ -23,7 +23,7 @@ function Uploads() {
   useEffect(()=>{
     (async()=>{
 
-      const {data} = await axios.get('http://13.235.82.14:5000/api/get-upload-files',{
+      const {data} = await api.get('/get-upload-files',{
         headers: 'GET'
       })
 
@@ -70,10 +70,11 @@ function Uploads() {
     setLoader(true);
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("type", selectedOption);
 
     try {
-      const response = await axios.post(
-        "http://13.235.82.14:8000/upload_video/",
+      const response = await backendApi.post(
+        "/upload_video/",
         formData,
         {
           headers: {
@@ -149,6 +150,9 @@ function Uploads() {
                           <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             video
                           </th>
+                          <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            Status
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -162,6 +166,10 @@ function Uploads() {
                                 </td>
                                 <td className="text-xs font-weight-bold mb-0 text-secondary">
                                   {item.video_path}
+                                </td>
+                                <td className={`text-xs font-weight-bold mb-0 text-secondary ${item.status==='Processing' ? 'red-class' : 'green-class' }`}>
+                                  
+                                  {item.status}
                                 </td>
                               </tr> 
                             ))
@@ -186,10 +194,9 @@ function Uploads() {
                     }}
                   >
                     <option value=''>Select an option</option>
-                    <option value='face video'>Face video</option>
-                    <option value='License Plate Video'>
-                      License Plate Video
-                    </option>
+                    <option value='face'>Face video</option>
+                    <option value='car'>License Plate Video</option>
+                    <option value='both'>License Plate & Face Video</option>
                   </select>
 
                   {videoVisible && (

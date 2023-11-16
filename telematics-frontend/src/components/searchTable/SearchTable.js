@@ -1,4 +1,4 @@
-import React, { useState , useRef } from "react";
+import React, { useState } from "react";
 import "./searchTable.css";
 import DateRangePicker from 'rsuite/DateRangePicker';
 import 'leaflet/dist/leaflet.css';
@@ -34,10 +34,10 @@ const filteredData = data.filter((item) => {
 
   }
 
-  if (selectedFilter === "licenseNumberScore") {
-    const licenseNumberScore = item.licenseNumberScore.toString();
-    return licenseNumberScore.toLowerCase().includes(filter.toLowerCase());
-  }
+  // if (selectedFilter === "licenseNumberScore") {
+  //   const licenseNumberScore = item.licenseNumberScore.toString();
+  //   return licenseNumberScore.toLowerCase().includes(filter.toLowerCase());
+  // }
 
   const licenseNumber = item.licenseNumber.toString();
   return licenseNumber.toLowerCase().includes(filter.toLowerCase());
@@ -152,7 +152,7 @@ const cleanHandle = ()=>{
               >
                 <option value="">License Number</option>
                 <option value="processedTime">Date</option>
-                <option value="licenseNumberScore">License No score</option>
+                {/* <option value="licenseNumberScore">License No score</option> */}
               </select>
             </div>
             <div className="card-body px-0 pt-0 pb-2">
@@ -166,9 +166,9 @@ const cleanHandle = ()=>{
                       <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         License number 
                       </th>
-                      <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                      {/* <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         license Number Score
-                      </th>
+                      </th> */}
                       <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         Image
                       </th>
@@ -189,15 +189,15 @@ const cleanHandle = ()=>{
                             <td className="text-xs font-weight-bold mb-0 text-secondary">
                               {item.licenseNumber}
                             </td>
-                            <td className="text-xs font-weight-bold mb-0 text-secondary">
+                            {/* <td className="text-xs font-weight-bold mb-0 text-secondary">
                               {item.licenseNumberScore}
-                            </td>
+                            </td> */}
                             <td className="text-xs font-weight-bold mb-0 " >
                               <img
                                 id="myImg"
                                 src={plateImage2}
                                 alt="Snow"
-                                width={'50'}
+                                width={'80'}
                                 onClick={() => {
 
                                   openModal(plateImage2, 'Snow')
