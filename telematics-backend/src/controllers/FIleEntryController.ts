@@ -6,7 +6,7 @@ const getAllFiles = async (req: Request, res: Response, next: NextFunction) => {
     try {
       
         const results = await appDataSource.getRepository('file_entry')
-            .query('SELECT * FROM file_entry;');
+            .query('SELECT * FROM file_entry ORDER BY input_date, input_timestamp DESC;');
   
       if (!results) {
         return res.json({ Bool: false, message: 'Files not found' });
