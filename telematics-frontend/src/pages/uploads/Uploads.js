@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-// import { toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { Loader } from "rsuite";
 import NavBar from "../../components/navBar/NavBar";
@@ -14,7 +14,7 @@ function Uploads() {
   const [file, setFile] = useState(null);
   const [show, setShow] = useState(false);
   const [loader, setLoader] = useState(false)
-  const [status, setStatus] = useState(false);
+  // const [status, setStatus] = useState(false);
   const [uploadData, setUploadData] = useState(null);
   const [reRender, setRerender] = useState(false);
 
@@ -88,32 +88,32 @@ function Uploads() {
       setSelectedOption('');
       fileInputRef.current.value = null;
       setRerender(!reRender);
-      setStatus('Your video successfully processed!')
-      // toast.success(' Your video successfully processed!', {
-      //   position: "top-center",
-      //   autoClose: 3000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "light",
-      //   })
+      // setStatus('Your video is in process!')
+      toast.success(' Your video is in process!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        })
       // console.log("Response:", response);
 
     } catch (error) {
       setSelectedOption('')
-      setStatus('Your video cannot be  processed!');
-      // toast.error(' Your video cannot be  processed!', {
-      //   position: "top-center",
-      //   autoClose: 3000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "light",
-      //   })
+      // setStatus('Your video cannot be  processed!');
+      toast.error(' Your video cannot be  processed!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        })
       console.error("Error uploading file:", error);
     }
   }
@@ -223,7 +223,7 @@ function Uploads() {
                     </div>
                   ) : <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
                         <h4 style={{ marginTop: '2rem'}}>
-                          { status }
+                          {/* { status } */}
                         </h4>
                       </div>
                   
