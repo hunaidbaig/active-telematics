@@ -107,55 +107,63 @@ const RestrictedNumberPlate = () => {
                             </div>
 
                             {/* tabel starting */}
-                            <h5 style={{ padding: '1rem' }}>Restricted Cars</h5>
-                            <div className="card mb-4">
-                                <div className="card-body px-0 pt-0 pb-2">
-                                    <div className="table-responsive p-0">
-                                        <table className="table align-items-center mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                        Serial No
-                                                    </th>
-                                                    <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                        License Number
-                                                    </th>
-                                                    <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                        
-                                                    </th>
-                                                   
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {
-                                                    loadData ?
-                                                        loadData                                                   
-                                                    :
-                                                        data?.map((item,index)=>{
-                                                            return(
-                                                            <tr key={index}>
-                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">{index+1}</td>
-                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">{item.licenseNumber}</td>
-                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">
-                                                                    <button className='bg-gradient-primary'
-                                                                        style={{
-                                                                            padding : '0.4rem',
-                                                                            borderRadius: '10px',
-                                                                            color: '#ffffff'
-                                                                        }}
-                                                                    onClick={()=> onDelete(item.id)}
-                                                                    >
-                                                                        Delete me
-                                                                    </button>
-                                                                </td>
+                            {
+                                    data?.length>0 ?
+                                    <>
+                                        <h5 style={{ padding: '1rem' }}>Restricted Cars</h5>
+                                        <div className="card mb-4">
+                                            <div className="card-body px-0 pt-0 pb-2">
+                                                <div className="table-responsive p-0">
+                                                    <table className="table align-items-center mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                    Serial No
+                                                                </th>
+                                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                    License Number
+                                                                </th>
+                                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                    
+                                                                </th>
+                                                                
                                                             </tr>
-                                                        )})
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                                                        </thead>
+                                                        <tbody>
+                                                            {
+                                                                loadData ?
+                                                                    loadData                                                   
+                                                                :
+                                                                    data?.map((item,index)=>{
+                                                                        return(
+                                                                        <tr key={index}>
+                                                                            <td className="text-xs font-weight-bold mb-0 text-secondary">{index+1}</td>
+                                                                            <td className="text-xs font-weight-bold mb-0 text-secondary">{item.licenseNumber}</td>
+                                                                            <td className="text-xs font-weight-bold mb-0 text-secondary">
+                                                                                <button className='bg-gradient-primary'
+                                                                                    style={{
+                                                                                        padding : '0.4rem',
+                                                                                        borderRadius: '10px',
+                                                                                        color: '#ffffff'
+                                                                                    }}
+                                                                                onClick={()=> onDelete(item.id)}
+                                                                                >
+                                                                                    Delete me
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    )})
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                    :
+                                    <></>
+                            }
                             {/* tabel starting */}
 
                         </div>
