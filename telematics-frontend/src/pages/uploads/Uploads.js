@@ -183,7 +183,7 @@ function Uploads() {
 
               <div className='card mb-4'>
                 <div className='card-header'>
-                  <label style={{ fontSize: "1rem" }}>Input Type:</label>
+                  <label style={{ fontSize: "1rem" }}>Video Type:</label>
                   <select
                     value={selectedOption}
                     onChange={handleOptionChange}
@@ -194,9 +194,9 @@ function Uploads() {
                     }}
                   >
                     <option value=''>Select an option</option>
-                    <option value='face'>Face video</option>
-                    <option value='car'>License Plate Video</option>
-                    <option value='both'>License Plate & Face Video</option>
+                    <option value='face'>Face Recognition</option>
+                    <option value='car'>License Plate Recognition</option>
+                    <option value='both'>License Plate & Face Recognition</option>
                   </select>
 
                   {videoVisible && (

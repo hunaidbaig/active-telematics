@@ -117,7 +117,7 @@ const cleanHandle = ()=>{
           <div className="card mb-4">
             <div className="card-header pb-0">
               {
-                show ? <DateRangePicker showOneCalendar style={{ width: '100%' }} onOk={ (value) => dateChangeHandler(value) } onClean={()=> cleanHandle()} /> 
+                show ? <DateRangePicker showOneCalendar placeholder="Select Date Range"  style={{ width: '100%' }} onOk={ (value) => dateChangeHandler(value) } onClean={()=> cleanHandle()} /> 
                 : 
                 <div className="search-bar">
                   <input
