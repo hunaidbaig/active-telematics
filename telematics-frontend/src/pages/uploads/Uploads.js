@@ -21,6 +21,7 @@ function Uploads() {
 
 
   useEffect(()=>{
+    
     (async()=>{
 
       const {data} = await api.get('/get-upload-files',{
@@ -66,11 +67,14 @@ function Uploads() {
     }
 
     // console.log('check', file)
+    const user = JSON.parse(localStorage.getItem('userToken'))
+    console.log(user.username)
     setShow(true);
     setLoader(true);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("type", selectedOption);
+    formData.append("username", user.username)
 
     try {
       const response = await backendApi.post(

@@ -115,9 +115,9 @@ const Sidebar = ({ dashboardToggle, toggleHandle }) => {
             >
             <div className="sidenav-header">
                 <i className="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" onClick={(e)=> toggleHandle()} aria-hidden="true" id="iconSidenav"></i>
-                <Link className="navbar-brand m-0" to="/" target="_blank">
+                <Link style={{ textDecoration: 'none' }} className="navbar-brand m-0 " to="/" >
                     <img src={process.env.PUBLIC_URL + "/assets/img/logo-ct.png"} className="navbar-brand-img h-100" alt="main_logo" />
-                    {/* <span className="ms-1 font-weight-bold">Welcome {user?.username}</span> */}
+                    <div className="ms-1 font-weight-bold d-flex align-items-center justify-content-center mt-1 ">Welcome {user?.username}</div>
                 </Link>
             </div>
             <hr className="horizontal dark mt-0" />
@@ -144,11 +144,11 @@ const Sidebar = ({ dashboardToggle, toggleHandle }) => {
                         <div className="docs-info">
                             <h6 className="text-white up mb-0">Need help?</h6>
                             <p className="text-xs font-weight-bold">Please Contact Us</p>
-                             <Link style={{ textDecoration: 'none' }} className="btn btn-white btn-sm w-100 mb-0">Contatct Us</Link> 
+                             <Link style={{ textDecoration: 'none' }} to={"https://www.activetelematics.com/"} target='_blank' className="btn btn-white btn-sm w-100 mb-0">Contatct Us</Link> 
                         </div>
                     </div>
                 </div>
-                <Link to={"/dashboard"} className="btn bg-gradient-primary mt-3 w-100" >Contact Us</Link>
+                <Link style={{ textDecoration: 'none' }} to={"https://www.activetelematics.com/"} target='_blank'  className="btn bg-gradient-primary mt-3 w-100" >Contact Us</Link>
             </div>
         </aside>
     )

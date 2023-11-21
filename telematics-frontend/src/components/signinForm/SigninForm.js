@@ -12,16 +12,18 @@ function SigninForm() {
     e.preventDefault();
 
     const staticEmail = 'active@gmail.com';
+    const secondStaticEmail = 'testing@gmail.com';
     const staticPassword = '123456';
     
-    if(staticEmail === email && staticPassword === password){
-      localStorage.setItem("userToken", JSON.stringify({email}));
+    if((staticEmail === email || secondStaticEmail === email) && staticPassword === password){
+      let username = staticEmail === email ? 'active' : 'testing'
+      localStorage.setItem("userToken", JSON.stringify({email, username}));
 
       if(checked){
         localStorage.setItem("rememberedCredentials", JSON.stringify({ email, password }));
       }
       nav("/");
-      console.error("Login success");
+      console.log("Login success");
     }
     else {
         console.error("Login failed");
