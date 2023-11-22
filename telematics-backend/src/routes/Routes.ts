@@ -29,6 +29,8 @@ Router.post('/update-restricted-number-plate', RNumberPLateController.updateNumb
 Router.delete('/remove-restricted-number-plate/:id', RNumberPLateController.removeNumberPlate );
 
 Router.get('/get-restricted-images', restrictedImageController.getAllRestrictedImages);
+Router.delete('/remove-restricted-image/:id', restrictedImageController.removeFace );
+
 
 
 

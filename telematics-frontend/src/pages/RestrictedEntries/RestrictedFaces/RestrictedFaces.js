@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../components/Sidebar/Sidebar';
 import NavBar from '../../../components/navBar/NavBar';
 import { api } from '../../../api/Config';
+import axios from 'axios';
 
 const RestrictedFaces = () => {
     const [dashboardToggle, setDashboardToggle] = useState(false);
     const [uploadData, setUploadData] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [currentImage, setCurrentImage] = useState('');
+    const [file, setFile] = useState(null);
+    const [reRender, setRerender] = useState(null);
 
     useEffect(()=>{
     
@@ -17,11 +20,15 @@ const RestrictedFaces = () => {
             headers: 'GET'
           })
     
-          setUploadData([...data.data])
+          setUploadData([...data.data].reverse())
           // console.log(data, 'data')
     
         })()
-      },[])
+      }, [reRender])
+
+      useEffect(()=>{
+        onUpload()
+      }, [file])
 
     const toggleHandle = () => {
         setDashboardToggle(!dashboardToggle);
@@ -37,12 +44,68 @@ const RestrictedFaces = () => {
         setModalVisible(false);
     };
 
-    const onFileChange = (event) => {
-        // setFile(event.target.files[0]);
+    const onFileChange = async (event) => {
+        setFile(event.target.files[0]);
         // setLoading(true)
         console.log(event.target.files[0])
     };
 
+    const onUpload = async () => {
+        console.log('file', file)
+        if (!file) {
+          // console.log("No file selected");
+        //   setLoading(null)
+          return;
+        }
+    
+        console.log('file', file)
+    
+        const formData = new FormData();
+        formData.append("file", file);
+    
+        try {
+          const response = await axios.post(
+            "http://13.235.82.14:8000/restricted_face/",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+    
+          console.log(file);
+          console.log("Response:", response);
+          setRerender('chalo na')
+        //   setUploadData([...uploadData, response.data.similar_images]);
+          
+        } catch (error) {
+          console.error("Error uploading file:", error);
+        }
+      };
+
+    const onDelete = async (id)=>{
+        console.log(id, 'id')
+        try{
+
+            const filterData = uploadData.filter(item=> item.id !== id);
+            setUploadData(filterData);
+    
+            const response = await api.delete(`/remove-restricted-image/${id}`);
+            const result = response.data;
+    
+            if(result.Bool){
+                console.log(result.message);
+            }
+            else{
+                console.log('network error')
+            }
+        }
+        catch(e){
+            console.log(e);
+        }
+
+    }
 
   return (
     <>
@@ -110,6 +173,18 @@ const RestrictedFaces = () => {
                                                     }}
                                                 />
                                             </div>
+                                        </td>
+                                        <td className="text-xs font-weight-bold mb-0 text-secondary">
+                                            <button className='bg-gradient-primary'
+                                                style={{
+                                                    padding : '0.4rem',
+                                                    borderRadius: '10px',
+                                                    color: '#ffffff'
+                                                }}
+                                            onClick={()=> onDelete(item.id)}
+                                            >
+                                                Delete me
+                                            </button>
                                         </td>
                                     </tr> 
                                     ))
