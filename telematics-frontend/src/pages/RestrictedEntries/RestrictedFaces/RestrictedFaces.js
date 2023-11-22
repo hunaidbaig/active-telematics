@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../components/Sidebar/Sidebar';
 import NavBar from '../../../components/navBar/NavBar';
-import { backendApi } from '../../../api/Config';
+import { api } from '../../../api/Config';
 
 const RestrictedFaces = () => {
     const [dashboardToggle, setDashboardToggle] = useState(false);
@@ -13,7 +13,7 @@ const RestrictedFaces = () => {
     
         (async()=>{
     
-          const {data} = await backendApi.get('/get-restricted-images',{
+          const {data} = await api.get('/get-restricted-images',{
             headers: 'GET'
           })
     
