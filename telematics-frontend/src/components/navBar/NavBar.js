@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-const NavBar = ({ toggleHandle, title, temp = false }) => {
+const NavBar = ({ toggleHandle, title, temp = false, nestedRoute=null }) => {
     const nav = useNavigate()
 
     function handleLogOut() {
@@ -21,13 +21,23 @@ const NavBar = ({ toggleHandle, title, temp = false }) => {
                         <li className="breadcrumb-item text-sm">
                             <Link className="opacity-5 text-dark" to="">
                                 Pages
-                            </Link >
+                            </Link>
                         </li>
+                        {
+                            nestedRoute &&
+                                <li
+                                    className={`breadcrumb-item text-sm text-dark active ${nestedRoute && 'opacity-5 text-dark' } `}
+                                    aria-current="page"
+                                >
+                                    { nestedRoute }
+                                </li>
+
+                        }
                         <li
-                            className="breadcrumb-item text-sm text-dark active"
+                            className={`breadcrumb-item text-sm text-dark active `}
                             aria-current="page"
                         >
-                            {title}
+                            {title} 
                         </li>
                     </ol>
                     <h6 className="font-weight-bolder mb-0">{title}</h6>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import Sidebar from "../../../components/Sidebar/Sidebar";
 import "./FaceRecognition.css";
 // import ImageGrid from "../../components/imageGrid/ImageGrid";
 import axios from "axios";
-import RecognitionTable from "../../components/recognitionTable/RecognitionTable";
-import NavBar from "../../components/navBar/NavBar";
+import RecognitionTable from "../../../components/recognitionTable/RecognitionTable";
+import NavBar from "../../../components/navBar/NavBar";
 
 function FaceRecognition() {
   const [dashboardToggle, setDashboardToggle] = useState(false);
@@ -67,7 +67,7 @@ function FaceRecognition() {
     >
       <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
       <main className='main-content position-relative max-height-vh-100 h-100 border-radius-lg '>
-        <NavBar toggleHandle={toggleHandle} title={'Face Recognition'} />
+        <NavBar toggleHandle={toggleHandle} title={'Face Recognition'} nestedRoute={'Detections'} />
         <div className='container-fluid py-4'>
           <div className='row' style={{ width: "100%" }}>
             <div className='col-12'>

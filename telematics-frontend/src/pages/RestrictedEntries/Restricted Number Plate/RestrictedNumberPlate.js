@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 // import { Loader } from "rsuite";
-import Sidebar from '../../components/Sidebar/Sidebar'
+import Sidebar from '../../../components/Sidebar/Sidebar'
 import axios from 'axios';
-import NavBar from '../../components/navBar/NavBar';
-import UseFetch from '../../hooks/UseFetch';
+import NavBar from '../../../components/navBar/NavBar';
+import UseFetch from '../../../hooks/UseFetch';
 
 const RestrictedNumberPlate = () => {
 
@@ -88,7 +88,7 @@ const RestrictedNumberPlate = () => {
         <div className={`g-sidenav-show  bg-gray-100 ${dashboardToggle ? 'g-sidenav-pinned' : ''} `}>
             <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
             <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-                <NavBar toggleHandle={toggleHandle} title={'Restricted Number Plate'} temp={true} />
+                <NavBar toggleHandle={toggleHandle} title={'Restricted Number Plate'} nestedRoute={'Restricted Entries'} />
                 <div className='container-fluid py-4'>
                     <div className='row' style={{ width: "100%" }}>
                         <div className='col-12'>

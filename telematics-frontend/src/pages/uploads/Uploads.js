@@ -157,6 +157,9 @@ function Uploads() {
                           <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             Status
                           </th>
+                          <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            User
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -174,6 +177,9 @@ function Uploads() {
                                 <td className={`text-xs font-weight-bold mb-0 text-secondary ${item.status==='Processing' ? 'red-class' : 'green-class' }`}>
                                   
                                   {item.status}
+                                </td>
+                                <td className={`text-xs font-weight-bold mb-0 text-secondary ${item.status==='Processing' ? 'red-class' : 'green-class' }`}>
+                                  {item.loggedinuser}
                                 </td>
                               </tr> 
                             ))

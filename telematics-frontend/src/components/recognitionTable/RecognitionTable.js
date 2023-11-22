@@ -78,7 +78,7 @@ function RecognitionTable({ images, loading }) {
         <img className="modal-content" id="img01" style={{
           height:"800px",
           objectFit:"contain"
-        }} src= {currentImage} alt={'number plate'}
+        }} src= {currentImage} alt={'recognisable face'}
         />
       </div>
     }
