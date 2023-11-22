@@ -78,7 +78,7 @@ function NumberPlate() {
     >
       <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
       <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        <NavBar toggleHandle={toggleHandle} title={'Number Plate'} nestedRoute={'Detections'} /> 
+        <NavBar toggleHandle={toggleHandle} title={'Number Plate'} nestedRoute={'Detections'} backBtn={'/detections'} /> 
         <div className="container-fluid py-4">
           <SearchTable data={carsData} loading={loading} />
         </div>

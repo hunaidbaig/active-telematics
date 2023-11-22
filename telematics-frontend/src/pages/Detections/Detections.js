@@ -30,7 +30,7 @@ const Detections = () => {
             <div className={`g-sidenav-show  bg-gray-100 ${dashboardToggle ?'g-sidenav-pinned' : ''} ` }>
                 <Sidebar  dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
                 <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-                    <NavBar toggleHandle={toggleHandle} title={'Detections'} />
+                    <NavBar toggleHandle={toggleHandle} title={'Detections'} backBtn={'/'} />
                     <LinkCard links={links} />
                     {/* <DashboardTotalCard data={data} /> */}
                     {/* <DashboardHeroSection data={data} loadData={loadData} /> */}

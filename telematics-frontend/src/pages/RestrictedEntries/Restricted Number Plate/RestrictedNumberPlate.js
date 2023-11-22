@@ -88,7 +88,7 @@ const RestrictedNumberPlate = () => {
         <div className={`g-sidenav-show  bg-gray-100 ${dashboardToggle ? 'g-sidenav-pinned' : ''} `}>
             <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
             <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-                <NavBar toggleHandle={toggleHandle} title={'Restricted Number Plate'} nestedRoute={'Restricted Entries'} />
+                <NavBar toggleHandle={toggleHandle} title={'Restricted Number Plate'} nestedRoute={'Restricted Entries'} backBtn={'/restricted-entries'} />
                 <div className='container-fluid py-4'>
                     <div className='row' style={{ width: "100%" }}>
                         <div className='col-12'>

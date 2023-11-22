@@ -29,7 +29,7 @@ const RestrictedEntries = () => {
             <div className={`g-sidenav-show  bg-gray-100 ${dashboardToggle ?'g-sidenav-pinned' : ''} ` }>
                 <Sidebar  dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
                 <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-                    <NavBar toggleHandle={toggleHandle} title={'Restricted Entries'} />
+                    <NavBar toggleHandle={toggleHandle} title={'Restricted Entries'} backBtn={'/'} />
                     <LinkCard links={links} />
                     {/* <DashboardTotalCard data={data} /> */}
                     {/* <DashboardHeroSection data={data} loadData={loadData} /> */}

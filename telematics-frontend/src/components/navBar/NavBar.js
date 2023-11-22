@@ -1,7 +1,8 @@
 import React from "react";
+import { IoReturnDownBack } from "react-icons/io5";
 import { useNavigate, Link } from "react-router-dom";
 
-const NavBar = ({ toggleHandle, title, temp = false, nestedRoute=null }) => {
+const NavBar = ({ toggleHandle, title, backBtn = null, nestedRoute=null }) => {
     const nav = useNavigate()
 
     function handleLogOut() {
@@ -38,10 +39,21 @@ const NavBar = ({ toggleHandle, title, temp = false, nestedRoute=null }) => {
                             aria-current="page"
                         >
                             {title} 
+                            
                         </li>
                     </ol>
-                    <h6 className="font-weight-bolder mb-0">{title}</h6>
+                    <h6 className="font-weight-bolder mb-0" style={{ marginRight: '1rem' }}>
+                        {title}
+                    </h6>
+                    {
+                        backBtn &&
+                            <Link to={backBtn} className="back-btn">
+                                <IoReturnDownBack style={{ height: '2rem', width: '26px', display: 'block' }} />
+                            </Link>
+
+                    }
                 </nav>
+                    
                 <div
                     className="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4"
                     id="navbar"
@@ -87,6 +99,7 @@ const NavBar = ({ toggleHandle, title, temp = false, nestedRoute=null }) => {
                     </ul>
                 </div>
             </div>
+            
         </nav>
     );
 };

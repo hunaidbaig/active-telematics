@@ -67,7 +67,7 @@ function FaceRecognition() {
     >
       <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
       <main className='main-content position-relative max-height-vh-100 h-100 border-radius-lg '>
-        <NavBar toggleHandle={toggleHandle} title={'Face Recognition'} nestedRoute={'Detections'} />
+        <NavBar toggleHandle={toggleHandle} title={'Face Recognition'} nestedRoute={'Detections'} backBtn={'/detections'} />
         <div className='container-fluid py-4'>
           <div className='row' style={{ width: "100%" }}>
             <div className='col-12'>

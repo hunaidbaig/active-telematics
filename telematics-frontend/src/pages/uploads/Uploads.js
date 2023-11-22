@@ -132,7 +132,7 @@ function Uploads() {
     <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
 
       <main className='main-content position-relative max-height-vh-100 h-100 border-radius-lg '>
-        <NavBar toggleHandle={toggleHandle} title={'Uploads'} temp={true} />
+        <NavBar toggleHandle={toggleHandle} title={'Uploads'} temp={true} backBtn={'/'} />
         <div className='container-fluid py-4'>
           <div className='row' style={{ width: "100%" }}>
             <div className='col-12'>
