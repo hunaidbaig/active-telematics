@@ -4,6 +4,7 @@ import { UserController } from '../controllers/UserController';
 import { LicensePlateController } from '../controllers/LicensePlateController';
 import { fileEntryController } from '../controllers/FIleEntryController';
 import { RNumberPLateController } from '../controllers/RNumberPlateController';
+import { restrictedImageController } from '../controllers/RestrictedFaces';
 
 const Router = ExpressRouter();
 
@@ -26,6 +27,9 @@ Router.get('/get-restricted-number-plate', RNumberPLateController.allNumberPlate
 Router.post('/add-restricted-number-plate', RNumberPLateController.addNumberPlate );
 Router.post('/update-restricted-number-plate', RNumberPLateController.updateNumberPlate );
 Router.delete('/remove-restricted-number-plate/:id', RNumberPLateController.removeNumberPlate );
+
+Router.get('/get-restricted-images', restrictedImageController.getAllRestrictedImages);
+
 
 
 
