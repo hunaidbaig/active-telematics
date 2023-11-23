@@ -5,6 +5,7 @@ import { LicensePlateController } from '../controllers/LicensePlateController';
 import { fileEntryController } from '../controllers/FIleEntryController';
 import { RNumberPLateController } from '../controllers/RNumberPlateController';
 import { restrictedImageController } from '../controllers/RestrictedFaces';
+import { CarNotificationHistoryController } from '../controllers/CarNotificationHistoryController';
 
 const Router = ExpressRouter();
 
@@ -30,6 +31,11 @@ Router.delete('/remove-restricted-number-plate/:id', RNumberPLateController.remo
 
 Router.get('/get-restricted-images', restrictedImageController.getAllRestrictedImages);
 Router.delete('/remove-restricted-image/:id', restrictedImageController.removeFace );
+
+
+Router.post('/add-car-notifcation', CarNotificationHistoryController.addNotificationHistory );
+Router.get('/get-all-car-notifcation', CarNotificationHistoryController.getAllNotifications );
+
 
 
 
