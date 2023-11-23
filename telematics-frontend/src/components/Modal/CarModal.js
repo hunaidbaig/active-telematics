@@ -4,7 +4,7 @@ import moment from 'moment';
 
 
 const CarModal = ({ handleClose, open, car  }) => {
-  console.log('open',car)
+  // console.log('open',car)
   return (
     <>
       <Modal open={open} onClose={handleClose}>
@@ -18,10 +18,10 @@ const CarModal = ({ handleClose, open, car  }) => {
               </div>
               <div className='car_detail'>
                 <h6>License Number:</h6>
-                <span>{car.license_number}</span>
+                <span>{car.license_number === undefined ? car.licenseNumber : car.license_number}</span>
                 <br />
                 <h6>Detected Time:</h6>
-                <span>{moment.utc(car.processed_time).format('MMMM Do YYYY, h:mm:ss A')}</span>
+                <span>{moment.utc(car.processed_time === undefined ? car.processedTime : car.processed_time).format('MMMM Do YYYY, h:mm:ss A')}</span>
               </div>
               <div>
                 <h6 style={{ marginBottom: '0.5rem' }}>Location:</h6>

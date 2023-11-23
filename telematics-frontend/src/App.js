@@ -22,7 +22,7 @@ function App() {
 
 
   const handleOpen = (car) => {
-    console.log(car)
+    // console.log(car)
     setOpen(true)
     setCarData({...car})
   };
@@ -52,7 +52,7 @@ function App() {
           <Route  path='/detections/face-recognition' element={ <ProtectedRoutes><FaceRecognition/></ProtectedRoutes> }/>
         
         <Route  path='/restricted-entries' element={ <ProtectedRoutes><RestrictedEntries/></ProtectedRoutes> }/>
-          <Route  path='/restricted-entries/restricted-number-plate' element={ <ProtectedRoutes><RestrictedNumberPlate/></ProtectedRoutes> }/>
+          <Route  path='/restricted-entries/restricted-number-plate' element={ <ProtectedRoutes><RestrictedNumberPlate handleOpen={handleOpen} /></ProtectedRoutes> }/>
           <Route  path='/restricted-entries/restricted-faces' element={ <ProtectedRoutes><RestrictedFaces/></ProtectedRoutes> }/>
         <Route  path='/uploads' element={ <ProtectedRoutes><Uploads/></ProtectedRoutes> }/>
 

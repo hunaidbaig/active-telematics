@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import DashboardTotalCard from '../../components/dashboardTotalCard/DashboardTotalCard';
 import DashboardHeroSection from '../../components/dashboardHeroSection/DashboardHeroSection';
-import axios from 'axios';
 import NavBar from '../../components/navBar/NavBar';
 import { toast } from 'react-toastify';
 import NotificationCard from '../../components/notificationCard/NotificationCard';
-import CarModal from '../../components/Modal/CarModal';
+import { api } from '../../api/Config';
+
 
 const Dashboard = ({ handleOpen }) => {
 
@@ -15,32 +15,18 @@ const Dashboard = ({ handleOpen }) => {
   const [restrictedData, setRestrictedData] = useState([]);
   const [loadData, setLoadData] = useState(null);
   const [count, setCount] = useState(0);
-  // const [open, setOpen] = React.useState(false);
-  // const [carData, setCarData] = React.useState(null);
-
-
-
-  // const handleOpen = (car) => {
-  //   console.log(car)
-  //   setOpen(true)
-  //   setCarData({...car})
-  // };
-  // const handleClose = () => {
-  //   setOpen(false);
-  //   setCarData(null)
-  // };
+  
 
   useEffect(()=>{
     const fetch = async ()=>{
       setLoadData(true);
       try{
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/get-unique-license-plate`);
+        const response = await api.get(`/get-unique-license-plate`);
         const result =  response.data;
   
         if(result.Bool){
           setData(result.data);
           setLoadData(false)
-          // setCount(prev=> prev+1);
         }
         else{
           console.log('reject your request');
@@ -56,7 +42,7 @@ const Dashboard = ({ handleOpen }) => {
     const fetchRestricted = async ()=>{
       setLoadData(true);
       try{
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/get-restricted-number-plate`);
+        const response = await api.get(`/get-restricted-number-plate`);
         const result =  response.data;
   
         if(result.Bool){
@@ -82,29 +68,25 @@ const Dashboard = ({ handleOpen }) => {
 
   },[])
 
-  const onSubmit = async (id, numInput, status)=>{
-    console.log('click')
-        const obj = {
-            id: id,
-            licenseNumber : numInput,
-            status: status
-        }
-        try {
-            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/update-restricted-number-plate`, obj);
-            const result = response.data;
+  const onSubmit = async (path, obj)=>{
+    console.log('click', obj)
+      
+      try {
+        const response = await api.post(path, obj);
+        const result = response.data;
 
-            if (result.Bool) {
-                // console.log(result.data)
-                setRestrictedData([ ...restrictedData, result.data]);
-            }
-            else {
-                console.log('reject your request');
-            }
-
-            // console.log(result, 'result');
-        } catch (e) {
-            console.log(e);
+        if (result.Bool) {
+            console.log(result.data)
+            // setRestrictedData([ ...restrictedData, result.data]);
         }
+        else {
+            console.log('reject your request');
+        }
+
+        // console.log(result, 'result');
+      } catch (e) {
+        console.log(e);
+      }
     
 }
 
@@ -134,17 +116,36 @@ const Dashboard = ({ handleOpen }) => {
               progress: undefined,
               theme: "light",
               className: 'notification-card',
-              // style:{
-              //   width : '600px',
-              // },
               onClick :()=>{
                 console.log('hello')
                 handleOpen(item);
               }
               
             });
+
+            const obj = {
+              id: arr[index].id,
+              licenseNumber : item.license_number,
+              status: 'delivered'
+            }
+
+            const NotifiedCar = {
+              frameNo : item.frame_no,
+              carId: item.car_id,
+              carBbox : item.car_bbox,
+              licensePlateBbox: item.license_plate_bbox,
+              licensePlateBboxScore: item.license_plate_bbox_score,
+              licenseNumber : item.license_number,
+              licenseNumberScore : item.license_number_score,
+              processedTime : item.processed_time,
+              image : item.image,
+              latitude: item.latitude,
+              longitude : item.longitude
+            }
             
-             onSubmit(arr[index].id, item.license_number, 'delivered');
+            onSubmit('/update-restricted-number-plate', obj);
+            onSubmit('/add-car-notifcation', NotifiedCar);
+
           }
         })
       }
@@ -167,9 +168,6 @@ const Dashboard = ({ handleOpen }) => {
 
   return (
     <>
-        {/* {
-          open && <CarModal handleClose={handleClose} open={open} car={carData} />
-        } */}
         <div className={`g-sidenav-show  bg-gray-100 ${dashboardToggle ?'g-sidenav-pinned' : ''} ` }>
 
             <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />

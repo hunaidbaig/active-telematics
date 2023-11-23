@@ -80,6 +80,16 @@ option{
   color: black;
 }
 
+.rectricted-col{
+  display: flex;
+  gap: 1rem;
+}
+
+
+.rectricted-col .card{
+  width: 100%;
+}
+
 
 /* width */
 ::-webkit-scrollbar {
@@ -99,6 +109,16 @@ option{
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+
+@media only screen and (max-width: 1167px) {
+  .rectricted-col{
+    flex-direction: column;
+  }
+
+  .rectricted-col .card{
+    height: 300px;
+  }
 }
 
 @media only screen and (max-width: 600px) {

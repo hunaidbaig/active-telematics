@@ -5,14 +5,16 @@ import axios from 'axios';
 import NavBar from '../../../components/navBar/NavBar';
 import UseFetch from '../../../hooks/UseFetch';
 
-const RestrictedNumberPlate = () => {
+const RestrictedNumberPlate = ({ handleOpen }) => {
 
     const [dashboardToggle, setDashboardToggle] = useState(false);
     const [numInput, setNumInput] = useState('');
     const { data, setData, loadData, setLoadData, fetch } = UseFetch();
+    const { data : historyData, loadData : loadHistoryData, fetch: HistoryFetch } = UseFetch();
 
     useEffect(() => {
         fetch('/get-restricted-number-plate');
+        HistoryFetch('/get-all-car-notifcation');
 
     }, [])
 
@@ -106,12 +108,14 @@ const RestrictedNumberPlate = () => {
                                 <button disabled={!numInput.length>0} className="btn bg-gradient-primary mt-3 w-100" onClick={()=>onSubmit()}>Add number plate</button>
                             </div>
 
-                            {/* tabel starting */}
-                            {
+
+                            <div className='rectricted-col'>
+                                {/* tabel starting */}
+                                {
                                     data?.length>0 ?
                                     <>
-                                        <h5 style={{ padding: '1rem' }}>Restricted Cars</h5>
                                         <div className="card mb-4">
+                                        <h5 style={{ padding: '1rem' }}>Restricted Cars</h5>
                                             <div className="card-body px-0 pt-0 pb-2">
                                                 <div className="table-responsive p-0">
                                                     <table className="table align-items-center mb-0">
@@ -163,8 +167,63 @@ const RestrictedNumberPlate = () => {
                                     </>
                                     :
                                     <></>
-                            }
-                            {/* tabel starting */}
+                                }
+                                {/* tabel starting */}
+
+                                {
+                                    historyData?.length>0 ?
+                                    <>
+                                        <div className="card mb-4">
+                                            <h5 style={{ padding: '1rem' }}>Notification Delivered</h5>
+                                            <div className="card-body px-0 pt-0 pb-2">
+                                                <div className="table-responsive p-0">
+                                                    <table className="table align-items-center mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                    Time
+                                                                </th>
+                                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                    License Number
+                                                                </th>
+                                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                    Image
+                                                                </th>
+                                                                
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {
+                                                                loadHistoryData ?
+                                                                    loadHistoryData                                                   
+                                                                :
+                                                                    historyData?.map((item,index)=>{
+                                                                        return(
+                                                                            <tr key={index} onClick={()=>handleOpen(item)}>
+                                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">{item.processedTime}</td>
+                                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">{item.licenseNumber}</td>
+                                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">
+                                                                                <img
+                                                                                    id="myImg"
+                                                                                    src={process.env.REACT_APP_BASE_IMAGE+'/'+item.image}
+                                                                                    alt="car image"
+                                                                                    width={'80'}
+                                                                                    />
+                                                                                </td>
+                                                                            </tr>
+                                                                    )})
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                    :
+                                    <></>
+                                }
+                            </div>
 
                         </div>
                     </div>
