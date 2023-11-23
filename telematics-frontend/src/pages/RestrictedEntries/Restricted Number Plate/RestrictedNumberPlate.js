@@ -199,7 +199,7 @@ const RestrictedNumberPlate = ({ handleOpen }) => {
                                                                 :
                                                                     historyData?.map((item,index)=>{
                                                                         return(
-                                                                            <tr key={index} onClick={()=>handleOpen(item)}>
+                                                                            <tr key={index} onClick={()=>handleOpen(item)} style={{ cursor: 'pointer' }}>
                                                                                 <td className="text-xs font-weight-bold mb-0 text-secondary">{item.processedTime}</td>
                                                                                 <td className="text-xs font-weight-bold mb-0 text-secondary">{item.licenseNumber}</td>
                                                                                 <td className="text-xs font-weight-bold mb-0 text-secondary">
