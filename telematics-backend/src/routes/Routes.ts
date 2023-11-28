@@ -32,7 +32,7 @@ Router.delete('/remove-restricted-number-plate/:id', RNumberPLateController.remo
 
 Router.get('/get-restricted-images', restrictedImageController.getAllRestrictedImages);
 Router.delete('/remove-restricted-image/:id', restrictedImageController.removeFace );
-Router.put('/update-detected-face', restrictedImageController.updateFace );
+Router.post('/update-detected-face', restrictedImageController.updateFace );
 
 
 Router.post('/add-car-notifcation', CarNotificationHistoryController.addNotificationHistory );
