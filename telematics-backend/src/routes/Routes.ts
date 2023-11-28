@@ -6,6 +6,7 @@ import { fileEntryController } from '../controllers/FIleEntryController';
 import { RNumberPLateController } from '../controllers/RNumberPlateController';
 import { restrictedImageController } from '../controllers/RestrictedFaces';
 import { CarNotificationHistoryController } from '../controllers/CarNotificationHistoryController';
+import { FaceNotificationController } from '../controllers/FaceNotificationController';
 
 const Router = ExpressRouter();
 
@@ -31,10 +32,15 @@ Router.delete('/remove-restricted-number-plate/:id', RNumberPLateController.remo
 
 Router.get('/get-restricted-images', restrictedImageController.getAllRestrictedImages);
 Router.delete('/remove-restricted-image/:id', restrictedImageController.removeFace );
+Router.put('/update-detected-face', restrictedImageController.updateFace );
 
 
 Router.post('/add-car-notifcation', CarNotificationHistoryController.addNotificationHistory );
 Router.get('/get-all-car-notifcation', CarNotificationHistoryController.getAllNotifications );
+
+Router.post('/add-face-notifcation', FaceNotificationController.addNotificationFace );
+Router.get('/get-all-face-notifcation', FaceNotificationController.getAllFaceNotifications );
+
 
 
 

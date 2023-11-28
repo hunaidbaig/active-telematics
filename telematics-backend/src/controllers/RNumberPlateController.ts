@@ -46,20 +46,20 @@ const addNumberPlate = async (req: Request, res: Response, next: NextFunction)=>
 const updateNumberPlate = async (req: Request, res: Response, next: NextFunction)=> {
   console.log(req.body)
   try{
-     const { id,licenseNumber, status } = req.body;
+    const { id,licenseNumber, status } = req.body;
 
-     const obj ={
-      id: id,
-      licenseNumber: licenseNumber,
-      status: status
-     }
-     const licensePlate = await appDataSource.getRepository(RestrictedNumberPlate).findOneBy({id})
-      if(licensePlate){
-        await appDataSource.getRepository(RestrictedNumberPlate).save(obj);
-      }
-      else{
-        return res.json({ Bool: false, message: 'not present' });
-      }
+    const obj ={
+    id: id,
+    licenseNumber: licenseNumber,
+    status: status
+    }
+    const licensePlate = await appDataSource.getRepository(RestrictedNumberPlate).findOneBy({id})
+    if(licensePlate){
+      await appDataSource.getRepository(RestrictedNumberPlate).save(obj);
+    }
+    else{
+      return res.json({ Bool: false, message: 'not present' });
+    }
 
 
       return res.json({ Bool: true, data: licensePlate });
