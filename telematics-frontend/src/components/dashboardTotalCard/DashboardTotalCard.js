@@ -1,12 +1,12 @@
 import React from 'react'
 import Card from './Card'
 
-const DashboardTotalCard = ({data}) => {
-
+const DashboardTotalCard = ({data, faces, cars}) => {
+  
     let cardList = [
-        { title: 'Total Cars', total: `${data?.length}` },
-        { title: 'Total Hours Processed ', total: `5` },
-        { title: 'Total Face Recognized', total: `172`  },
+        { title: 'Total Cars', total: `${data?.length === undefined ? 0 : data?.length}` },
+        { title: 'Restricted Car Detected ', total: `${cars?.length === undefined ? 0 : cars?.length}` },
+        { title: 'Restricted Faces Recognized', total: `${faces?.length === undefined ? 0 : faces?.length}`  },
         // { title: 'Sales', value: '+5%' },
     ]
 

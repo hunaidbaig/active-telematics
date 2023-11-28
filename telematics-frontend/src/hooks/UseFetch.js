@@ -14,7 +14,7 @@ const UseFetch = ()=>{
             const result = response.data;
 
             if (result.Bool) {
-                // console.log(result.data)
+                // console.log(result.data, '----------------------')
                 setData(result.data);
                 setLoadData(false)
             }

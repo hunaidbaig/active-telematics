@@ -6,65 +6,32 @@ import NavBar from '../../components/navBar/NavBar';
 import { toast } from 'react-toastify';
 import NotificationCard from '../../components/notificationCard/NotificationCard';
 import { api } from '../../api/Config';
+import UseFetch from '../../hooks/UseFetch';
 
 
 const Dashboard = ({ handleOpen }) => {
 
   const [dashboardToggle, setDashboardToggle] = useState(false);
-  const [data, setData] = useState([]);
-  const [restrictedData, setRestrictedData] = useState([]);
-  const [loadData, setLoadData] = useState(null);
-  const [count, setCount] = useState(0);
+  const { data, loadData, fetch, } = UseFetch();
+  const { data : restrictedData, fetch : fetchRestricted, } = UseFetch();
+  const { data : restrictedFace, fetch : fetchRestrictedFace, } = UseFetch();
+  const { data : faces, fetch : fetchFaceNotification, } = UseFetch();
+  const { data : cars, fetch : fetchCarNotification, } = UseFetch();
   
 
   useEffect(()=>{
-    const fetch = async ()=>{
-      setLoadData(true);
-      try{
-        const response = await api.get(`/get-unique-license-plate`);
-        const result =  response.data;
-  
-        if(result.Bool){
-          setData(result.data);
-          setLoadData(false)
-        }
-        else{
-          console.log('reject your request');
-        }
-  
-        // console.log(result);
-      }catch(e){
-        console.log(e);
-      }
 
-    }
+    (async()=>{
+      await Promise.all([
+        fetch('/get-unique-license-plate'),
+        fetchRestricted('/get-restricted-number-plate'),
+        fetchRestrictedFace('/get-restricted-images'),
+        fetchFaceNotification('/get-all-face-notifcation'),
+        fetchCarNotification('/get-all-car-notifcation')
+      ])
+    })()
 
-    const fetchRestricted = async ()=>{
-      setLoadData(true);
-      try{
-        const response = await api.get(`/get-restricted-number-plate`);
-        const result =  response.data;
-  
-        if(result.Bool){
-          setRestrictedData(result.data);
-          setLoadData(false)
-          setCount(prev=> prev+1);
-        }
-        else{
-          console.log('reject your request');
-        }
-  
-        // console.log(result);
-      }catch(e){
-        console.log(e);
-      }
-
-    }
-
-    fetch();
-    fetchRestricted();
     // toast.dismiss();
-
 
   },[])
 
@@ -88,10 +55,28 @@ const Dashboard = ({ handleOpen }) => {
         console.log(e);
       }
     
-}
+  }
+
+  const reuseTostify = (item)=>{
+    toast(<NotificationCard card={item} />, {
+      position: "bottom-left",
+      autoClose: false, 
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      className: 'notification-card',
+      onClick :()=>{
+        console.log('hello')
+        handleOpen(item);
+      }})
+  }
+  
 
   useEffect(()=>{
-    if(data.length>0 && restrictedData.length>0){
+    if(data && restrictedData && restrictedFace ){
+      console.log(restrictedFace, data, 'data')
       let arr = [];
       const result = data.reduce((matches, item) => {
         const match = restrictedData.find((restrictedItem) => item.license_number.toLowerCase() === restrictedItem.licenseNumber.toLowerCase());
@@ -107,21 +92,9 @@ const Dashboard = ({ handleOpen }) => {
         result.map((item,index)=>{
           // console.log(arr[index].status);
           if(arr[index].status === 'pending'){
-            toast(<NotificationCard car={item} />, {
-              position: "bottom-left",
-              autoClose: false, // Disable auto close
-              closeOnClick: false, // Disable built-in close on click
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              className: 'notification-card',
-              onClick :()=>{
-                console.log('hello')
-                handleOpen(item);
-              }
-              
-            });
+            const updateItem = { ...item, type: 'car', title: 'Car Detected' }
+            
+            reuseTostify(updateItem);
 
             const obj = {
               id: arr[index].id,
@@ -150,10 +123,20 @@ const Dashboard = ({ handleOpen }) => {
         })
       }
 
+      restrictedFace?.map(item=>{
+        if(item.is_detected && item.status === 'pending'){
+          const obj = { ...item, type: 'face', title: 'Face Detected' }
+          reuseTostify(obj);
+
+          onSubmit('/update-detected-face', { ...item, status: 'deliverd' });
+          onSubmit('/add-face-notifcation', { ...item, status: 'deliverd' });
+        }
+      })
+
       // console.log(result, 'result');
       // console.log(data, restrictedData)
     }
-  },[count===2])
+  },[restrictedData, restrictedFace])
 
 
 
@@ -173,7 +156,7 @@ const Dashboard = ({ handleOpen }) => {
             <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
             <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
                 <NavBar toggleHandle={toggleHandle} title={'Dashboard'} />
-                <DashboardTotalCard data={data} />
+                <DashboardTotalCard data={data} faces={faces} cars={cars} />
                 <DashboardHeroSection data={data} loadData={loadData} />
             </main>
         </div>

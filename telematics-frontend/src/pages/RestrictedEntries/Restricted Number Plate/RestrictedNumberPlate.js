@@ -4,6 +4,7 @@ import Sidebar from '../../../components/Sidebar/Sidebar'
 import axios from 'axios';
 import NavBar from '../../../components/navBar/NavBar';
 import UseFetch from '../../../hooks/UseFetch';
+import moment from 'moment';
 
 const RestrictedNumberPlate = ({ handleOpen }) => {
 
@@ -140,7 +141,7 @@ const RestrictedNumberPlate = ({ handleOpen }) => {
                                                                 :
                                                                     data?.map((item,index)=>{
                                                                         return(
-                                                                        <tr key={index}>
+                                                                        <tr key={index} style={{ height : '62px' }}>
                                                                             <td className="text-xs font-weight-bold mb-0 text-secondary">{index+1}</td>
                                                                             <td className="text-xs font-weight-bold mb-0 text-secondary">{item.licenseNumber}</td>
                                                                             <td className="text-xs font-weight-bold mb-0 text-secondary">
@@ -174,7 +175,7 @@ const RestrictedNumberPlate = ({ handleOpen }) => {
                                     historyData?.length>0 ?
                                     <>
                                         <div className="card mb-4">
-                                            <h5 style={{ padding: '1rem' }}>Notification Delivered</h5>
+                                            <h5 style={{ padding: '1rem' }}>Notification's History</h5>
                                             <div className="card-body px-0 pt-0 pb-2">
                                                 <div className="table-responsive p-0">
                                                     <table className="table align-items-center mb-0">
@@ -198,9 +199,10 @@ const RestrictedNumberPlate = ({ handleOpen }) => {
                                                                     loadHistoryData                                                   
                                                                 :
                                                                     historyData?.map((item,index)=>{
+                                                                        const updateItem = { ...item, type: 'car', title: 'Car Detected' }
                                                                         return(
-                                                                            <tr key={index} onClick={()=>handleOpen(item)} style={{ cursor: 'pointer' }}>
-                                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">{item.processedTime}</td>
+                                                                            <tr key={index} onClick={()=>handleOpen(updateItem)} style={{ cursor: 'pointer' }}>
+                                                                                <td className="text-xs font-weight-bold mb-0 text-secondary">{moment.utc(item.processedTime).format('MMMM Do YYYY, h:mm:ss A')}</td>
                                                                                 <td className="text-xs font-weight-bold mb-0 text-secondary">{item.licenseNumber}</td>
                                                                                 <td className="text-xs font-weight-bold mb-0 text-secondary">
                                                                                 <img

@@ -1,31 +1,55 @@
-import { Modal, Button } from 'rsuite';
+import { Modal, Button, Carousel } from 'rsuite';
 import Map from '../map/Map';
 import moment from 'moment';
 
 
-const CarModal = ({ handleClose, open, car  }) => {
-  // console.log('open',car)
+const CarModal = ({ handleClose, open, card  }) => {
+  console.log('open',card)
   return (
     <>
       <Modal open={open} onClose={handleClose}>
         <Modal.Header>
-          <Modal.Title>Car Detail</Modal.Title>
+          <Modal.Title>{card.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>
               <div>
-                <img width={'100%'} src={process.env.REACT_APP_BASE_IMAGE+`/${car.image}`} alt='car detail' />
+                {
+                  card.type === 'face' ?
+                  <Carousel autoplay className="custom-slider">
+                    {
+                      card.detected_frame.map((image, index)=>{
+                        return(
+                          <img key={index} width={'100%'} src={process.env.REACT_APP_BASE_IMAGE+`/${image}`} alt='detected face image' />
+                        );
+                      })
+                    }
+                  </Carousel>
+                  :
+                  <img width={'100%'} src={process.env.REACT_APP_BASE_IMAGE+`/${card.image}`} alt='car detail' />
+
+                }
               </div>
               <div className='car_detail'>
-                <h6>License Number:</h6>
-                <span>{car.license_number === undefined ? car.licenseNumber : car.license_number}</span>
+                {
+                  card.type === 'face' ? <></> :
+                  <>
+                    <h6>License Number:</h6>
+                    <span>{card.license_number === undefined ? card.licenseNumber : card.license_number}</span>
+                  </>
+                }
                 <br />
                 <h6>Detected Time:</h6>
-                <span>{moment.utc(car.processed_time === undefined ? car.processedTime : car.processed_time).format('MMMM Do YYYY, h:mm:ss A')}</span>
+                <span>{moment.utc(card.processed_time === undefined ? card.processedTime : card.processed_time).format('MMMM Do YYYY, h:mm:ss A')}</span>
               </div>
               <div>
                 <h6 style={{ marginBottom: '0.5rem' }}>Location:</h6>
-                <Map longitude={car.longitude} latitude={car.latitude} />
+                  {
+                    card.type === 'face' ? 
+                      <Map longitude={100.67227133333333} latitude={4.2068085} />
+                    :
+                      <Map longitude={card.longitude} latitude={card.latitude} />
+                  }
               </div>
           </div>
         </Modal.Body>

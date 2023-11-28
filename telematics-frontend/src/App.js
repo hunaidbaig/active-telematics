@@ -17,18 +17,18 @@ import RestrictedEntries from './pages/RestrictedEntries/RestrictedEntries';
 
 function App() {
   const [open, setOpen] = React.useState(false);
-  const [carData, setCarData] = React.useState(null);
+  const [cardData, setCardData] = React.useState(null);
 
 
 
   const handleOpen = (car) => {
-    // console.log(car)
+    console.log(car)
     setOpen(true)
-    setCarData({...car})
+    setCardData({...car})
   };
   const handleClose = () => {
     setOpen(false);
-    setCarData(null)
+    setCardData(null)
   };
 
   return (
@@ -41,7 +41,7 @@ function App() {
       />
         {/* <Route path='/signup' element={<Signup />} />  */}
         {
-          open && <CarModal handleClose={handleClose} open={open} car={carData} />
+          open && <CarModal handleClose={handleClose} open={open} card={cardData} />
         }
       <Routes>
         <Route path='/signin' element={<Signin />} />
@@ -53,7 +53,7 @@ function App() {
         
         <Route  path='/restricted-entries' element={ <ProtectedRoutes><RestrictedEntries/></ProtectedRoutes> }/>
           <Route  path='/restricted-entries/restricted-number-plate' element={ <ProtectedRoutes><RestrictedNumberPlate handleOpen={handleOpen} /></ProtectedRoutes> }/>
-          <Route  path='/restricted-entries/restricted-faces' element={ <ProtectedRoutes><RestrictedFaces/></ProtectedRoutes> }/>
+          <Route  path='/restricted-entries/restricted-faces' element={ <ProtectedRoutes><RestrictedFaces handleOpen={handleOpen}/></ProtectedRoutes> }/>
         <Route  path='/uploads' element={ <ProtectedRoutes><Uploads/></ProtectedRoutes> }/>
 
       </Routes>
