@@ -5,6 +5,8 @@ import "./FaceRecognition.css";
 import axios from "axios";
 import RecognitionTable from "../../../components/recognitionTable/RecognitionTable";
 import NavBar from "../../../components/navBar/NavBar";
+import { Loader } from "rsuite";
+import { toast } from "react-toastify";
 
 function FaceRecognition() {
   const [dashboardToggle, setDashboardToggle] = useState(false);
@@ -13,8 +15,11 @@ function FaceRecognition() {
   const [loading, setLoading] = useState(null);
 
   const onFileChange = (event) => {
-    setFile(event.target.files[0]);
-    setLoading(true)
+    const selectedFile = event.target.files[0];
+    if(selectedFile){
+      setFile(selectedFile);
+      setLoading(true);
+    }
   };
 
   const toggleHandle = () => {
@@ -28,11 +33,11 @@ function FaceRecognition() {
   const onUpload = async () => {
     if (!file) {
       // console.log("No file selected");
-      setLoading(null)
+      setLoading(null);
       return;
     }
 
-    console.log('file', file)
+    // console.log("file", file);
 
     const formData = new FormData();
     formData.append("file", file);
@@ -48,16 +53,33 @@ function FaceRecognition() {
         }
       );
 
-      console.log(file);
-      console.log("Response:", response.data.similar_images);
-
-      setImages(response.data.similar_images);
-      setLoading(null)
+      // console.log(file);
+      // console.log("Response:", response.data.similar_images);
+      if(response.data.similar_images?.length>0){
+        setImages(response.data.similar_images);
+      } 
+      else{
+        setImages(null)
+        reuseTostify('No face found!');
+      }
+      setLoading(null);
     } catch (error) {
-      setLoading(null)
+      setLoading(null);
       console.error("Error uploading file:", error);
     }
   };
+
+  const reuseTostify = (message)=>{
+    toast.warn(message, {
+      position: "top-center",
+      autoClose: true, 
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      className: 'notification-card'
+    })}
 
   return (
     <div
@@ -66,26 +88,41 @@ function FaceRecognition() {
       } `}
     >
       <Sidebar dashboardToggle={dashboardToggle} toggleHandle={toggleHandle} />
-      <main className='main-content position-relative max-height-vh-100 h-100 border-radius-lg '>
-        <NavBar toggleHandle={toggleHandle} title={'Face Recognition'} nestedRoute={'Detections'} backBtn={'/detections'} />
-        <div className='container-fluid py-4'>
-          <div className='row' style={{ width: "100%" }}>
-            <div className='col-12'>
-              <div className='card mb-4'>
-                <div className='card-header pb-0'>
+      <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <NavBar
+          toggleHandle={toggleHandle}
+          title={"Face Recognition"}
+          nestedRoute={"Detections"}
+          backBtn={"/detections"}
+        />
+        <div className="container-fluid py-4">
+          <div className="row" style={{ width: "100%" }}>
+            <div className="col-12">
+              <div className="card mb-4">
+                <div className="card-header pb-0">
                   <h6>Upload Your Image Here </h6>
                   <input
-                    type='file'
-                    id='img'
-                    name='img'
+                    type="file"
+                    id="img"
+                    name="img"
                     onChange={onFileChange}
-                    accept='image/*'
-                    className='btn bg-gradient-primary mt-3'
+                    accept="image/*"
+                    className="btn bg-gradient-primary mt-3"
                   />
                 </div>
-                <div className='card-body px-0 pt-0 pb-2'>
+                <div className="card-body px-0 pt-0 pb-2">
                   {/* <ImageGrid images={images} /> */}
-                    <RecognitionTable images={images} loading={loading} />
+                  {
+                    loading ?
+                      <Loader style={{ display: "flex", justifyContent: "center" }} />
+                    :
+                    images?.length > 0 &&
+                      <RecognitionTable images={images} uploadImage={file} />
+                    // :
+                    //   file === null ?
+                    //     <></> 
+                    //   : reuseTostify('No face found!')
+                  }
                 </div>
               </div>
             </div>
