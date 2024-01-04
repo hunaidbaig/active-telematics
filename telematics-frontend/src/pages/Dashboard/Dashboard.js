@@ -21,6 +21,7 @@ const Dashboard = ({ handleOpen }) => {
 
   useEffect(()=>{
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     (async()=>{
       await Promise.all([
         fetch('/get-unique-license-plate'),

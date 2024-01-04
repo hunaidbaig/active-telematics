@@ -195,7 +195,7 @@ const RestrictedFaces = ({ handleOpen }) => {
                         {/* tabel restricted starting */}
                         <div className="card mb-4">
                             <h5 style={{ padding: '1rem' }}>Notification's History</h5>
-                            <div className="card-body px-0 pt-0 pb-2">
+                            <div className="card-body px-0 pt-0 pb-2 scrolable">
                                 <div className="table-responsive p-0">
                                     <table className="table align-items-center mb-0">
                                         <thead>

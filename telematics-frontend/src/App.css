@@ -34,8 +34,9 @@ option{
 }
 
 .scrolable{
-  height: 200px;
+  height: 400px;
   scroll-behavior: smooth;
+  overflow-y: scroll;
 }
 
 .car_detail{
@@ -121,9 +122,153 @@ option{
   border-radius: 30px;
 }
 
+
+
+
+/* chatapp button css */
+.chat-btn{
+  position: absolute;
+  right: 2rem;
+  bottom: 3rem;
+  font-size: 3rem;
+  cursor: pointer;
+  z-index: 11;
+}
+
+
+
+/* =======================ChatModal update CSS========================= */
+.chat-modal{
+  /* height: 500px; */
+  position: absolute;
+  top: 40%;
+  right: 3rem;
+}
+
+.chat-modal-body{
+  height: 400px;
+}
+
+.chat-modal-form{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-modal-form-item{
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.chat-modal-btn{
+  background-color: #98C93C;
+  color: white;
+  font-weight: 700;
+}
+
+.chat-modal-form-input{
+  width: 100%;
+}
+
+.chatbot-prompt-input{
+  position: fixed;
+  bottom: 1.3rem;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chatbot-prompt-icon{
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #87ce00;
+}
+
+.chatbot-fqs{
+  box-shadow: 0 6px 6px -6px #98C93C;
+  padding-bottom: 1px;
+}
+
+.chatbot-fqs-list{
+  list-style: none;
+  padding: 0;
+}
+
+.chatbot-fqs-item {
+  /* background-image: linear-gradient(310deg, #666667 0%, #98C93C 100%); */
+  background: transparent;
+  border: 1px solid #98C93C;
+  margin: 0.5rem 0px;
+  padding: 0.5rem 0.5rem;
+  border-radius: 15px;
+  color: #000;
+  font-family: 'Open Sans';
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease-in;
+}
+
+.chatbot-fqs-item:hover{
+  /* background-image: linear-gradient(310deg, #666667 0%, #6d755d 100%); */
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+
+
+
+/* ======== */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  display: flex;
+  overflow-y: auto;
+  padding: 10px 0px;
+  flex-direction: column;
+  margin-bottom: 0.8rem;
+  text-transform: capitalize;
+}
+
+.message {
+  margin: 5px 5px;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 70%;
+}
+
+.user {
+  background-color: #cdf2bb;
+  /* float: left; */
+}
+
+.gpt {
+  background-color: #e6e6e6;
+  align-self: flex-end;
+  width: auto;
+}
+
+.loader {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+  align-self: flex-end;
+}
+
+/* ========== */
+
+
+
+
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 2px;
 }
 
 /* Track */

@@ -117,7 +117,7 @@ const RestrictedNumberPlate = ({ handleOpen }) => {
                                     <>
                                         <div className="card mb-4">
                                         <h5 style={{ padding: '1rem' }}>Restricted Cars</h5>
-                                            <div className="card-body px-0 pt-0 pb-2">
+                                            <div className="card-body px-0 pt-0 pb-2 scrolable">
                                                 <div className="table-responsive p-0">
                                                     <table className="table align-items-center mb-0">
                                                         <thead>
@@ -135,29 +135,25 @@ const RestrictedNumberPlate = ({ handleOpen }) => {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {
-                                                                loadData ?
-                                                                    loadData                                                   
-                                                                :
-                                                                    data?.map((item,index)=>{
-                                                                        return(
-                                                                        <tr key={index} style={{ height : '62px' }}>
-                                                                            <td className="text-xs font-weight-bold mb-0 text-secondary">{index+1}</td>
-                                                                            <td className="text-xs font-weight-bold mb-0 text-secondary">{item.licenseNumber}</td>
-                                                                            <td className="text-xs font-weight-bold mb-0 text-secondary">
-                                                                                <button className='bg-gradient-primary'
-                                                                                    style={{
-                                                                                        padding : '0.4rem',
-                                                                                        borderRadius: '10px',
-                                                                                        color: '#ffffff'
-                                                                                    }}
-                                                                                onClick={()=> onDelete(item.id)}
-                                                                                >
-                                                                                    Delete me
-                                                                                </button>
-                                                                            </td>
-                                                                        </tr>
-                                                                    )})
+                                                            {   data?.map((item,index)=>{
+                                                                return(
+                                                                <tr key={index} style={{ height : '62px' }}>
+                                                                    <td className="text-xs font-weight-bold mb-0 text-secondary">{index+1}</td>
+                                                                    <td className="text-xs font-weight-bold mb-0 text-secondary">{item.licenseNumber}</td>
+                                                                    <td className="text-xs font-weight-bold mb-0 text-secondary">
+                                                                        <button className='bg-gradient-primary'
+                                                                            style={{
+                                                                                padding : '0.4rem',
+                                                                                borderRadius: '10px',
+                                                                                color: '#ffffff'
+                                                                            }}
+                                                                        onClick={()=> onDelete(item.id)}
+                                                                        >
+                                                                            Delete me
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            )})
                                                             }
                                                         </tbody>
                                                     </table>
@@ -167,7 +163,11 @@ const RestrictedNumberPlate = ({ handleOpen }) => {
                                         </div>
                                     </>
                                     :
-                                    <></>
+                                    <>
+                                        <div className="card mb-4">
+                                            <h6>No Restricted Cars</h6>
+                                        </div>
+                                    </>
                                 }
                                 {/* tabel starting */}
 
@@ -176,7 +176,7 @@ const RestrictedNumberPlate = ({ handleOpen }) => {
                                     <>
                                         <div className="card mb-4">
                                             <h5 style={{ padding: '1rem' }}>Notification's History</h5>
-                                            <div className="card-body px-0 pt-0 pb-2">
+                                            <div className="card-body px-0 pt-0 pb-2 scrolable">
                                                 <div className="table-responsive p-0">
                                                     <table className="table align-items-center mb-0">
                                                         <thead>

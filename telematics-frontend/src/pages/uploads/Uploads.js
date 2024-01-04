@@ -140,8 +140,8 @@ function Uploads() {
               {/* tabel starting */}
               <h5 style={{ padding: '1rem' }}>File uploads</h5>
               <div className="card mb-4">
-                <div className="card-body px-0 pt-0 pb-2">
-                  <div className="table-responsive p-0 scrolable">
+                <div className="card-body px-0 pt-0 pb-2 scrolable">
+                  <div className="table-responsive p-0 ">
                     <table className="table align-items-center mb-0">
                       <thead>
                         <tr>
