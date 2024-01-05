@@ -3,7 +3,6 @@ import {
   Modal,
   Button,
   Form,
-  Input,
 } from "rsuite";
 import { IoMdSend } from "react-icons/io";
 import { backendApi } from "../../api/Config";
@@ -12,14 +11,16 @@ import { BeatLoader } from "react-spinners";
 
 const ChatModal = ({ open, setOpen }) => {
   //const [open, setOpen] = React.useState(false);
-  const [apiKey, setApiKey] = useState(null);
+  const openAi_key = localStorage?.getItem('api_key');
+  // console.log(openAi_key)
+  
+  const [apiKey, setApiKey] = useState(openAi_key);
   const [nextBtn, setNextBtn] = useState(true);
   const [erroMsg, setErrorMsg] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(false);
-
+  
   const [messages, setMessages] = useState([]);
-
 
   const sendMessage = async (e, value)=>{
     e.preventDefault();
@@ -40,10 +41,19 @@ const ChatModal = ({ open, setOpen }) => {
     try{
       const response = await backendApi.post(`/llm-query/?user_query=${msg}&api_key=${apiKey}`);
       const { data } = response;
+      if(data === 'Please enter valid OpenAI key.'){
+        setMessages( prev=> [ ...prev, { text: data, sender: 'gpt' } ]);
+        setLoading(false);
+        console.log(data);
+        localStorage?.removeItem('api_key');
+      }
+      else{
+        setMessages( prev=> [ ...prev, { text: data, sender: 'gpt' } ]);
+        setLoading(false);
+        console.log(data);
+        localStorage.setItem('api_key', apiKey);
+      }
 
-      setMessages( prev=> [ ...prev, { text: data, sender: 'gpt' } ]);
-      setLoading(false);
-      console.log(data);
 
     }
     catch(e){
@@ -84,18 +94,18 @@ const ChatModal = ({ open, setOpen }) => {
         </Modal.Header>
         {/* ==============api key input================= */}
         <Modal.Body className="chat-modal-body">
-          {nextBtn ? (
+          {(nextBtn && openAi_key === null) ? (
             <Form className="chat-modal-form">
               <Form.Group controlId="api-key">
                 <Form.ControlLabel className="chat-modal-form-item">
                   OpenAI API Key
                 </Form.ControlLabel>
-                <Form.Control
+                <input
                   name="api-key"
-                  className="chat-modal-form-input"
+                  className="chat-modal-form-input form-control"
                   placeholder="Enter your key"
                   errorMessage={ erroMsg ? 'This field is required.' : null}
-                  onChange={(e) => handleOpenAi(e)}
+                  onChange={(e) => handleOpenAi(e.target.value)}
                 />
               </Form.Group>
             </Form>
@@ -129,7 +139,7 @@ const ChatModal = ({ open, setOpen }) => {
               </div>
 
               <form className="chatbot-prompt-input">
-                <Input  style={{ width: '80%' }} placeholder="Enter your prompt" value={inputMessage} onChange={(e)=> setInputMessage(e)} />
+                <input className="form-control chatbot-prompt"   style={{ width: '80%'}} placeholder="Enter your prompt" value={inputMessage} onChange={(e)=> setInputMessage(e.target.value)} />
                 <Button disabled={loading} type="submit" onClick={(e)=>sendMessage(e, undefined)} > <IoMdSend className="chatbot-prompt-icon" /></Button> 
               </form>
 
@@ -138,14 +148,17 @@ const ChatModal = ({ open, setOpen }) => {
 
           {/* <Placeholder.Paragraph rows={80} /> */}
         </Modal.Body>
-        {
-          nextBtn &&
-            <Modal.Footer>
-              <Button onClick={handleNext} className="chat-modal-btn">
-                Next
-              </Button>
-            </Modal.Footer>
-        }
+          
+          <Modal.Footer>
+            {
+              (nextBtn && openAi_key === null) ?
+                <Button onClick={handleNext} className="chat-modal-btn">
+                  Next
+                </Button>
+                : null
+            }
+          </Modal.Footer>
+        
         
       </Modal>
     </>

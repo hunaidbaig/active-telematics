@@ -132,7 +132,11 @@ option{
   bottom: 3rem;
   font-size: 3rem;
   cursor: pointer;
-  z-index: 11;
+  z-index: 1110;
+}
+
+.rs-modal-wrapper{
+  z-index: 11111;
 }
 
 
@@ -143,10 +147,25 @@ option{
   position: absolute;
   top: 40%;
   right: 3rem;
+  /* height: 516px;   */
+  z-index: 11110;
 }
 
 .chat-modal-body{
   height: 400px;
+}
+
+.chatbot-main{
+  padding: 0px 5px;
+}
+
+.rs-modal-content{
+  height: 516px;
+  padding: 20px 10px;
+}
+
+.rs-form-group{
+  width: 90%;
 }
 
 .chat-modal-form{
@@ -170,17 +189,23 @@ option{
 
 .chat-modal-form-input{
   width: 100%;
+  padding-left: 10px !important;
 }
 
 .chatbot-prompt-input{
   position: fixed;
-  bottom: 1.3rem;
+  bottom: 1.1rem;
   right: 0;
   left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  background-color: #ffffff;
+}
+
+.chatbot-prompt{
+  padding-left: 10px !important;
 }
 
 .chatbot-prompt-icon{
@@ -189,10 +214,10 @@ option{
   color: #87ce00;
 }
 
-.chatbot-fqs{
+/* .chatbot-fqs{
   box-shadow: 0 6px 6px -6px #98C93C;
   padding-bottom: 1px;
-}
+} */
 
 .chatbot-fqs-list{
   list-style: none;
