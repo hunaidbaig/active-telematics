@@ -61,6 +61,7 @@ const ChatModal = ({ open, setOpen }) => {
     try{
       const response = await backendApi.post(`/llm-query/?user_query=${msg}&api_key=${apiKey}`);
       const { data } = response;
+      console.log(data);
       if(data === 'Please enter valid OpenAI key.'){
         setMessages( prev=> [ ...prev, { text: data, sender: 'gpt' } ]);
         setLoading(false);
@@ -159,8 +160,8 @@ const ChatModal = ({ open, setOpen }) => {
                       className={`message ${message.sender === 'user' ? 'user' : 'gpt'}`}
                     >
                       {
-                        message.latLong !== undefined ?
-                          <Map latitude={4.2421} longitude={103.4221} />
+                        message.latLong ?
+                          <Map latitude={message.latLong.latitude} longitude={message.latLong.longitude} />
                         :
                         message.text
                       
