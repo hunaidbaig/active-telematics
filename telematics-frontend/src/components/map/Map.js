@@ -14,6 +14,7 @@ L.Icon.Default.mergeOptions({
 
 const Map = ({ latitude, longitude })=>{
 
+    console.log(latitude, longitude, 'map')
     const mapRef = useRef(null);
 
     const startPos = useRef({ x: 0, y: 0 });

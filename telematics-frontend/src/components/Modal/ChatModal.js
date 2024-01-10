@@ -7,6 +7,7 @@ import {
 import { IoMdSend } from "react-icons/io";
 import { backendApi } from "../../api/Config";
 import { BeatLoader } from "react-spinners";
+import Map from "../map/Map";
 
 
 const ChatModal = ({ open, setOpen }) => {
@@ -21,6 +22,25 @@ const ChatModal = ({ open, setOpen }) => {
   const [loading, setLoading] = useState(false);
   
   const [messages, setMessages] = useState([]);
+
+
+  const extractLatLongHandle = (result)=>{
+    const locationString = result;
+    const match = locationString.match(/\(([^,]+), ([^)]+)\)/);
+
+    if (match) {
+      const latitude = parseFloat(match[1]);
+      const longitude = parseFloat(match[2]);
+
+      return {latitude, longitude};
+      // console.log("Latitude:", latitude);
+      // console.log("Longitude:", longitude);
+    } else {
+      console.log("Invalid location string format");
+    }
+  }
+
+
 
   const sendMessage = async (e, value)=>{
     e.preventDefault();
@@ -46,6 +66,13 @@ const ChatModal = ({ open, setOpen }) => {
         setLoading(false);
         console.log(data);
         localStorage?.removeItem('api_key');
+      }
+      else if(data.includes('Location:')){
+        const latLong = extractLatLongHandle(data);
+        console.log(latLong.latitude, latLong.longitude);
+        setMessages( prev=> [ ...prev, { latLong: latLong, sender: 'gpt' } ]);
+        setLoading(false);
+        localStorage.setItem('api_key', apiKey);
       }
       else{
         setMessages( prev=> [ ...prev, { text: data, sender: 'gpt' } ]);
@@ -131,7 +158,14 @@ const ChatModal = ({ open, setOpen }) => {
                       key={index}
                       className={`message ${message.sender === 'user' ? 'user' : 'gpt'}`}
                     >
-                      {message.text}
+                      {
+                        message.latLong !== undefined ?
+                          <Map latitude={4.2421} longitude={103.4221} />
+                        :
+                        message.text
+                      
+                      }
+                      {/* <Map latitude={4.2421} longitude={103.4221} /> */}
                     </div>
                   ))}
                   {loading && <BeatLoader className="message loader" />}
